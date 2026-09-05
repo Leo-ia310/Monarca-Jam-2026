@@ -48,10 +48,10 @@ text = "Créditos"
 horizontal_alignment = 1
 
 [node name="CreditsText" type="RichTextLabel" parent="PageMargin/Center/MenuStack"]
-custom_minimum_size = Vector2(640, 220)
+custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
 bbcode_enabled = true
-text = "[center]Créditos placeholder\n\nEquipo de desarrollo pendiente.\nArte, audio, narrativa y programación se agregarán posteriormente.[/center]"
+text = "[center][b]MONARCA JAM 2026[/b]\n\nJuego 2D de terror tecnológico / psicológico\nCreado para una game jam de 3 días\n\n[b]Equipo[/b]\nDirección creativa: pendiente\nProgramación: pendiente\nArte 2D: pendiente\nDiseño de UI: pendiente\nNarrativa: pendiente\nAudio y música: pendiente\nQA / Playtesting: pendiente\n\n[b]Assets temporales[/b]\nFondos, personajes, iconos y sonidos serán reemplazados por el equipo.\n\n[b]Agradecimientos[/b]\nGracias al equipo, testers y colaboradores de la jam.[/center]"
 fit_content = true
 scroll_active = false
 

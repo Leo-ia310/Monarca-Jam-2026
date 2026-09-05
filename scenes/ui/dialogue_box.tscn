@@ -2,80 +2,76 @@
 
 [ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_dialogue_box"]
 [ext_resource type="Theme" path="res://themes/dialogue_theme.tres" id="2_dialogue_theme"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue_panel"]
-bg_color = Color(0.01, 0.012, 0.018, 0.82)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.55, 0.62, 0.66, 0.45)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
+[ext_resource type="Texture2D" path="res://assets/ui/1788579579082.png" id="3_dialogue_texture"]
 
 [node name="DialogueBox" type="Control"]
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
+mouse_filter = 0
 theme = ExtResource("2_dialogue_theme")
 script = ExtResource("1_dialogue_box")
 
-[node name="BottomMargin" type="MarginContainer" parent="."]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -190.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_constants/margin_left = 48
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 48
-theme_override_constants/margin_bottom = 32
+[node name="DialogueTexture" type="TextureRect" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 332.0
+offset_right = 1140.0
+offset_bottom = 700.0
+mouse_filter = 2
+texture = ExtResource("3_dialogue_texture")
+expand_mode = 1
+stretch_mode = 0
 
-[node name="Panel" type="PanelContainer" parent="BottomMargin"]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue_panel")
+[node name="ContentMargin" type="MarginContainer" parent="."]
+layout_mode = 0
+offset_left = 140.0
+offset_top = 332.0
+offset_right = 1140.0
+offset_bottom = 700.0
+mouse_filter = 2
+theme_override_constants/margin_left = 80
+theme_override_constants/margin_top = 86
+theme_override_constants/margin_right = 70
+theme_override_constants/margin_bottom = 58
 
-[node name="PanelMargin" type="MarginContainer" parent="BottomMargin/Panel"]
+[node name="DialogueContent" type="VBoxContainer" parent="ContentMargin"]
 layout_mode = 2
-theme_override_constants/margin_left = 24
-theme_override_constants/margin_top = 18
-theme_override_constants/margin_right = 24
-theme_override_constants/margin_bottom = 18
-
-[node name="TextStack" type="VBoxContainer" parent="BottomMargin/Panel/PanelMargin"]
-layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="CharacterNameLabel" type="Label" parent="BottomMargin/Panel/PanelMargin/TextStack"]
+[node name="SpeakerLabel" type="Label" parent="ContentMargin/DialogueContent"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 18
-text = "NOMBRE"
+mouse_filter = 2
+theme_override_font_sizes/font_size = 20
+text = "MIRROR"
 
-[node name="DialogueTextLabel" type="RichTextLabel" parent="BottomMargin/Panel/PanelMargin/TextStack"]
+[node name="DialogueText" type="RichTextLabel" parent="ContentMargin/DialogueContent"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(1, 76)
 layout_mode = 2
+mouse_filter = 2
+size_flags_vertical = 3
 bbcode_enabled = false
-text = "Texto de diálogo placeholder."
-fit_content = true
+text = "No deberías haber despertado."
+fit_content = false
 scroll_active = false
+autowrap_mode = 3
 
-[node name="ContinueRow" type="HBoxContainer" parent="BottomMargin/Panel/PanelMargin/TextStack"]
+[node name="ContinueRow" type="HBoxContainer" parent="ContentMargin/DialogueContent"]
 layout_mode = 2
+mouse_filter = 2
 alignment = 2
 
-[node name="ContinueIndicator" type="Label" parent="BottomMargin/Panel/PanelMargin/TextStack/ContinueRow"]
+[node name="ContinueIndicator" type="Label" parent="ContentMargin/DialogueContent/ContinueRow"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 text = "..."
 horizontal_alignment = 2
+
+[node name="TypingAudio" type="AudioStreamPlayer" parent="."]

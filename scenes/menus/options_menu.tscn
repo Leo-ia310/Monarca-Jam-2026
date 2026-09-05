@@ -36,9 +36,9 @@ theme_override_constants/margin_bottom = 48
 layout_mode = 2
 
 [node name="MenuStack" type="VBoxContainer" parent="PageMargin/Center"]
-custom_minimum_size = Vector2(480, 1)
+custom_minimum_size = Vector2(560, 1)
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 12
 alignment = 1
 
 [node name="TitleLabel" type="Label" parent="PageMargin/Center/MenuStack"]
@@ -47,18 +47,45 @@ theme_override_font_sizes/font_size = 36
 text = "Opciones"
 horizontal_alignment = 1
 
-[node name="VolumeRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
+[node name="AudioLabel" type="Label" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "AUDIO"
+horizontal_alignment = 1
+
+[node name="MasterVolumeRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="VolumeLabel" type="Label" parent="PageMargin/Center/MenuStack/VolumeRow"]
-custom_minimum_size = Vector2(140, 1)
+[node name="MasterVolumeLabel" type="Label" parent="PageMargin/Center/MenuStack/MasterVolumeRow"]
+custom_minimum_size = Vector2(160, 1)
 layout_mode = 2
 text = "Volumen general"
 vertical_alignment = 1
 
-[node name="VolumeSlider" type="HSlider" parent="PageMargin/Center/MenuStack/VolumeRow"]
+[node name="MasterVolumeSlider" type="HSlider" parent="PageMargin/Center/MenuStack/MasterVolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+focus_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+step = 1.0
+value = 100.0
+
+[node name="MusicVolumeRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="MusicVolumeLabel" type="Label" parent="PageMargin/Center/MenuStack/MusicVolumeRow"]
+custom_minimum_size = Vector2(160, 1)
+layout_mode = 2
+text = "Música"
+vertical_alignment = 1
+
+[node name="MusicVolumeSlider" type="HSlider" parent="PageMargin/Center/MenuStack/MusicVolumeRow"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(300, 32)
 layout_mode = 2
@@ -68,12 +95,71 @@ max_value = 100.0
 step = 1.0
 value = 80.0
 
+[node name="SfxVolumeRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="SfxVolumeLabel" type="Label" parent="PageMargin/Center/MenuStack/SfxVolumeRow"]
+custom_minimum_size = Vector2(160, 1)
+layout_mode = 2
+text = "Efectos"
+vertical_alignment = 1
+
+[node name="SfxVolumeSlider" type="HSlider" parent="PageMargin/Center/MenuStack/SfxVolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+focus_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+step = 1.0
+value = 80.0
+
+[node name="DisplayLabel" type="Label" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "PANTALLA"
+horizontal_alignment = 1
+
+[node name="ResolutionRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="ResolutionLabel" type="Label" parent="PageMargin/Center/MenuStack/ResolutionRow"]
+custom_minimum_size = Vector2(160, 1)
+layout_mode = 2
+text = "Resolución"
+vertical_alignment = 1
+
+[node name="ResolutionOption" type="OptionButton" parent="PageMargin/Center/MenuStack/ResolutionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 40)
+layout_mode = 2
+focus_mode = 2
+size_flags_horizontal = 3
+
 [node name="FullscreenCheck" type="CheckButton" parent="PageMargin/Center/MenuStack"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 44)
 layout_mode = 2
 focus_mode = 2
 text = "Pantalla completa"
+
+[node name="VsyncCheck" type="CheckButton" parent="PageMargin/Center/MenuStack"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+focus_mode = 2
+text = "VSync"
+
+[node name="VsyncDescription" type="Label" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "Sincroniza los FPS con el monitor para reducir cortes en la imagen."
+horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="BackButton" type="Button" parent="PageMargin/Center/MenuStack"]
 unique_name_in_owner = true

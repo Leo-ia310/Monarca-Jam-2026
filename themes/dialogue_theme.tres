@@ -1,24 +1,13 @@
 [gd_resource type="Theme" load_steps=2 format=3]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dialogue_panel"]
-bg_color = Color(0.01, 0.012, 0.018, 0.84)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.55, 0.62, 0.66, 0.45)
-corner_radius_top_left = 4
-corner_radius_top_right = 4
-corner_radius_bottom_right = 4
-corner_radius_bottom_left = 4
-content_margin_left = 24.0
-content_margin_top = 18.0
-content_margin_right = 24.0
-content_margin_bottom = 18.0
+[ext_resource type="FontFile" path="res://assets/fonts/rat-typewriter.ttf" id="1_rat_typewriter"]
 
 [resource]
+default_font = ExtResource("1_rat_typewriter")
+default_font_size = 22
 Label/colors/font_color = Color(0.9, 0.96, 0.94, 1)
-Label/font_sizes/font_size = 18
-PanelContainer/styles/panel = SubResource("StyleBoxFlat_dialogue_panel")
+Label/fonts/font = ExtResource("1_rat_typewriter")
+Label/font_sizes/font_size = 20
 RichTextLabel/colors/default_color = Color(0.86, 0.92, 0.9, 1)
-RichTextLabel/font_sizes/normal_font_size = 20
+RichTextLabel/fonts/normal_font = ExtResource("1_rat_typewriter")
+RichTextLabel/font_sizes/normal_font_size = 22
