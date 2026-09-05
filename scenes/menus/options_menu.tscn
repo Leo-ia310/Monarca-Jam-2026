@@ -1,0 +1,83 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/menus/options_menu.gd" id="1_options_menu"]
+
+[node name="OptionsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_options_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.018, 0.022, 0.03, 1)
+
+[node name="PageMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="Center" type="CenterContainer" parent="PageMargin"]
+layout_mode = 2
+
+[node name="MenuStack" type="VBoxContainer" parent="PageMargin/Center"]
+custom_minimum_size = Vector2(480, 1)
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Opciones"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="HBoxContainer" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_constants/separation = 16
+alignment = 1
+
+[node name="VolumeLabel" type="Label" parent="PageMargin/Center/MenuStack/VolumeRow"]
+custom_minimum_size = Vector2(140, 1)
+layout_mode = 2
+text = "Volumen general"
+vertical_alignment = 1
+
+[node name="VolumeSlider" type="HSlider" parent="PageMargin/Center/MenuStack/VolumeRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(300, 32)
+layout_mode = 2
+focus_mode = 2
+size_flags_horizontal = 3
+max_value = 100.0
+step = 1.0
+value = 80.0
+
+[node name="FullscreenCheck" type="CheckButton" parent="PageMargin/Center/MenuStack"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 44)
+layout_mode = 2
+focus_mode = 2
+text = "Pantalla completa"
+
+[node name="BackButton" type="Button" parent="PageMargin/Center/MenuStack"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Volver"

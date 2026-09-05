@@ -1,0 +1,63 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/menus/credits_menu.gd" id="1_credits_menu"]
+
+[node name="CreditsMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_credits_menu")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.018, 0.022, 0.03, 1)
+
+[node name="PageMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="Center" type="CenterContainer" parent="PageMargin"]
+layout_mode = 2
+
+[node name="MenuStack" type="VBoxContainer" parent="PageMargin/Center"]
+custom_minimum_size = Vector2(640, 1)
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PageMargin/Center/MenuStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Créditos"
+horizontal_alignment = 1
+
+[node name="CreditsText" type="RichTextLabel" parent="PageMargin/Center/MenuStack"]
+custom_minimum_size = Vector2(640, 220)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center]Créditos placeholder\n\nEquipo de desarrollo pendiente.\nArte, audio, narrativa y programación se agregarán posteriormente.[/center]"
+fit_content = true
+scroll_active = false
+
+[node name="BackButton" type="Button" parent="PageMargin/Center/MenuStack"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Volver"

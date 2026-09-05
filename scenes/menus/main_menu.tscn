@@ -1,0 +1,86 @@
+[gd_scene format=3 uid="uid://b2crguyo0kvbk"]
+
+[ext_resource type="Script" uid="uid://dlxmp833pagtj" path="res://scripts/menus/main_menu.gd" id="1_main_menu"]
+
+[node name="MainMenu" type="Control" unique_id=593051780]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_main_menu")
+
+[node name="Background" type="ColorRect" parent="." unique_id=1127468853]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.02, 0.025, 0.035, 1)
+
+[node name="PageMargin" type="MarginContainer" parent="." unique_id=1885930761]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="Center" type="CenterContainer" parent="PageMargin" unique_id=1370540211]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="MenuStack" type="VBoxContainer" parent="PageMargin/Center" unique_id=1553015212]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PageMargin/Center/MenuStack" unique_id=120139057]
+layout_mode = 2
+theme_override_font_sizes/font_size = 44
+text = "MONARCA JAM 2026"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="PageMargin/Center/MenuStack" unique_id=94346919]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Placeholder menu"
+horizontal_alignment = 1
+
+[node name="ButtonSpacer" type="Control" parent="PageMargin/Center/MenuStack" unique_id=1403870757]
+custom_minimum_size = Vector2(1, 20)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="PlayButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=543124689]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+text = "Jugar"
+
+[node name="OptionsButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1177508329]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+text = "Opciones"
+
+[node name="CreditsButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1308040421]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+text = "Créditos"
+
+[node name="ExitButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1202157046]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+text = "Salir"

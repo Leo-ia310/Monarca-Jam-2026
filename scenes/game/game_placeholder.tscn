@@ -1,0 +1,61 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/game_placeholder.gd" id="1_game_placeholder"]
+
+[node name="GamePlaceholder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_game_placeholder")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.015, 0.018, 0.024, 1)
+
+[node name="PageMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 48
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 48
+
+[node name="Center" type="CenterContainer" parent="PageMargin"]
+layout_mode = 2
+
+[node name="ContentStack" type="VBoxContainer" parent="PageMargin/Center"]
+layout_mode = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="TitleLabel" type="Label" parent="PageMargin/Center/ContentStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "GAME PLACEHOLDER"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="PageMargin/Center/ContentStack"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Los escenarios y personajes se agregarán posteriormente."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="BackButton" type="Button" parent="PageMargin/Center/ContentStack"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Volver al menú"
