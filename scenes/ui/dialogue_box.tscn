@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_dialogue_box"]
 [ext_resource type="Theme" path="res://themes/dialogue_theme.tres" id="2_dialogue_theme"]
 [ext_resource type="Texture2D" path="res://assets/ui/1788579579082.png" id="3_dialogue_texture"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="4_typing_audio"]
 
 [node name="DialogueBox" type="Control"]
 visible = false
@@ -75,3 +76,5 @@ text = "..."
 horizontal_alignment = 2
 
 [node name="TypingAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_typing_audio")
+bus = &"SFX"

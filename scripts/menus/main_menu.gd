@@ -1,6 +1,6 @@
 extends Control
 
-const GAME_PLACEHOLDER_PATH := "res://scenes/game/game_placeholder.tscn"
+const COGNIS_WELCOME_PATH := "res://scenes/story/cognis_welcome.tscn"
 const OPTIONS_MENU_PATH := "res://scenes/menus/options_menu.tscn"
 const CREDITS_MENU_PATH := "res://scenes/menus/credits_menu.tscn"
 
@@ -32,7 +32,7 @@ func _configure_focus_chain(controls: Array[Control]) -> void:
 
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file(GAME_PLACEHOLDER_PATH)
+	get_tree().change_scene_to_file(COGNIS_WELCOME_PATH)
 
 
 func _on_options_pressed() -> void:

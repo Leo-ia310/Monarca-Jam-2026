@@ -14,6 +14,7 @@ signal dialogue_finished
 @export var content_margin_top: float = 86.0
 @export var content_margin_right: float = 70.0
 @export var content_margin_bottom: float = 58.0
+@export var typing_audio_start_seconds: float = 7.0
 
 var dialogue_active := false
 var is_typing := false
@@ -39,6 +40,11 @@ func _ready() -> void:
 	continue_indicator.visible = false
 	_update_layout()
 	get_viewport().size_changed.connect(_update_layout)
+
+
+func _exit_tree() -> void:
+	if typing_audio != null:
+		typing_audio.stop()
 
 
 func _process(delta: float) -> void:
@@ -138,6 +144,9 @@ func _finish_current_line() -> void:
 	if _line_finished_emitted:
 		return
 
+	if typing_audio != null:
+		typing_audio.stop()
+
 	is_typing = false
 	_line_finished_emitted = true
 	continue_indicator.visible = true
@@ -147,6 +156,8 @@ func _finish_current_line() -> void:
 func _finish_dialogue() -> void:
 	dialogue_active = false
 	is_typing = false
+	if typing_audio != null:
+		typing_audio.stop()
 	current_line = -1
 	current_character = 0
 	_dialogue_lines.clear()
@@ -190,7 +201,7 @@ func _play_typing_audio(from_character: int, to_character: int) -> void:
 	for character_index in range(from_character, to_character):
 		var character := _current_text.substr(character_index, 1)
 		if _should_play_typing_audio(character):
-			typing_audio.play()
+			typing_audio.play(typing_audio_start_seconds)
 			return
 
 

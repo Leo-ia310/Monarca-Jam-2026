@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://bw5ofdp4j46dh"]
+
+[ext_resource type="Script" uid="uid://bsxxd1usks4x7" path="res://scripts/story/cognis_welcome.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
+
+[node name="CognisWelcome" type="Control" unique_id=1818371445]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="BlackBackground" type="ColorRect" parent="." unique_id=1064622750]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="PageMargin" type="MarginContainer" parent="." unique_id=517245555]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 160
+theme_override_constants/margin_top = 58
+theme_override_constants/margin_right = 160
+theme_override_constants/margin_bottom = 56
+
+[node name="ContentRoot" type="VBoxContainer" parent="PageMargin" unique_id=918871432]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="LogoPlaceholder" type="Label" parent="PageMargin/ContentRoot" unique_id=1944808758]
+custom_minimum_size = Vector2(1, 80)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "[ COGNIS SYSTEMS LOGO ]"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="StoryText" type="RichTextLabel" parent="PageMargin/ContentRoot" unique_id=1440503577]
+custom_minimum_size = Vector2(720, 430)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("2_font")
+theme_override_fonts/bold_font = ExtResource("2_font")
+theme_override_fonts/bold_italics_font = ExtResource("2_font")
+theme_override_fonts/italics_font = ExtResource("2_font")
+theme_override_font_sizes/normal_font_size = 22
+theme_override_font_sizes/bold_font_size = 22
+theme_override_font_sizes/bold_italics_font_size = 22
+theme_override_font_sizes/italics_font_size = 22
+bbcode_enabled = true
+text = "[center][font_size=30]BIENVENIDO A [b]COGNIS SYSTEMS[/b][/font_size][/center]
+
+Felicidades ha sido seleccionado para formar parte del Programa de Entrenamiento Sistemático de Inteligencia Artificial — un paso decisivo hacia la próxima generación de comprensión humana.
+
+Su nuevo cargo como [b]Ingeniero de Entrenamiento[/b] consiste en guiar, evaluar, corregir y supervisar el desarrollo de [b]“……”[/b], nuestra inteligencia artificial en fase de entrenamiento. Agradecemos su participación en dicho proyecto.
+
+[i]Recuerde: la constancia es la clave del progreso. Su rutina será monitoreada para garantizar resultados óptimos.[/i]"
+scroll_active = false
+
+[node name="ContinueLabel" type="Label" parent="PageMargin/ContentRoot" unique_id=1630911601]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 22
+text = "Presiona Enter para continuar"
+horizontal_alignment = 1
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=653879455]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
