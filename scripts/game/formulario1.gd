@@ -5,11 +5,20 @@ const BASE_SCORE := 40
 const NEXT_DAY_SCENE_PATH := "res://scenes/game/bedroom_ciclo2.tscn"
 
 @export var fade_in_duration: float = 2.5
-@export var intro_characters_per_second: float = 180.0
-@export var day_completed_characters_per_second: float = 55.0
+@export var boot_duration: float = 2.0
+@export var intro_characters_per_second: float = 130.0
+@export var question_characters_per_second: float = 24.0
+@export var day_completed_characters_per_second: float = 24.0
 @export var typing_audio_stop_delay: float = 0.12
 @export var day_completed_hold_duration: float = 7.0
+@export var ai_feedback_characters_per_second: float = 24.0
+@export var mascot_positive_texture: Texture2D
+@export var mascot_neutral_texture: Texture2D
+@export var mascot_low_texture: Texture2D
+@export var mascot_alert_texture: Texture2D
 
+@onready var mascot := $Mascot as TextureRect
+@onready var boot_overlay := $BootOverlay as Control
 @onready var terminal_panel := $TerminalPanel as Panel
 @onready var intro_text := $TerminalPanel/IntroText as RichTextLabel
 @onready var question_text := $TerminalPanel/QuestionText as RichTextLabel
@@ -18,6 +27,8 @@ const NEXT_DAY_SCENE_PATH := "res://scenes/game/bedroom_ciclo2.tscn"
 @onready var fade_rect := $FadeRect as ColorRect
 @onready var completion_text := $CompletionText as RichTextLabel
 @onready var typing_audio := $TypingAudio as AudioStreamPlayer
+@onready var move_audio := $MoveAudio as AudioStreamPlayer
+@onready var confirm_audio := $ConfirmAudio as AudioStreamPlayer
 
 var daily_score := BASE_SCORE
 var saved_responses: Array[Dictionary] = []
@@ -43,6 +54,9 @@ var _session_started := false
 var _showing_completion_report := false
 var _day_completed := false
 var _changing_to_next_day := false
+var _typing_question := false
+var _showing_ai_feedback := false
+var _last_score_delta := 0
 var _typing_stop_timer: SceneTreeTimer
 
 
@@ -52,6 +66,10 @@ func _ready() -> void:
 	options_container.visible = false
 	continue_label.visible = false
 	completion_text.visible = false
+	_update_mascot_texture()
+	boot_overlay.visible = true
+	fade_rect.visible = false
+	await _play_boot_sequence()
 	fade_rect.visible = true
 	fade_rect.modulate.a = 1.0
 	await _play_intro_transition()
@@ -79,7 +97,7 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo and _session_started and not _showing_completion_report and not _day_completed:
+	if event is InputEventKey and event.pressed and not event.echo and _session_started and not _typing_question and not _showing_ai_feedback and not _showing_completion_report and not _day_completed:
 		match event.keycode:
 			KEY_UP, KEY_W:
 				_change_selected_option(-1)
@@ -107,6 +125,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 		return
 
+	if _showing_ai_feedback:
+		_finish_ai_feedback()
+		get_viewport().set_input_as_handled()
+		return
+
 	if not _session_started:
 		if _intro_page_index < _intro_pages.size() - 1:
 			_show_intro_page(_intro_page_index + 1)
@@ -121,6 +144,14 @@ func _play_intro_transition() -> void:
 	transition_tween.tween_property(fade_rect, "modulate:a", 0.0, fade_in_duration)
 	await transition_tween.finished
 	fade_rect.visible = false
+
+
+func _play_boot_sequence() -> void:
+	await get_tree().create_timer(boot_duration).timeout
+	var boot_tween := create_tween()
+	boot_tween.tween_property(boot_overlay, "modulate:a", 0.0, 0.35)
+	await boot_tween.finished
+	boot_overlay.visible = false
 
 
 func _start_intro_typing() -> void:
@@ -147,6 +178,10 @@ func _finish_intro_typing() -> void:
 	_intro_typing = false
 	_stop_typing_audio()
 	continue_label.visible = not _showing_completion_report and not _day_completed
+	if _showing_ai_feedback:
+		continue_label.visible = true
+	elif _typing_question:
+		_finish_question_typing()
 	if _day_completed and not _changing_to_next_day:
 		_go_to_next_day()
 
@@ -159,6 +194,7 @@ func _show_intro_page(page_index: int) -> void:
 func _start_training_session() -> void:
 	_session_started = true
 	daily_score = BASE_SCORE
+	_last_score_delta = 0
 	saved_responses.clear()
 	intro_text.visible = false
 	continue_label.visible = false
@@ -166,6 +202,7 @@ func _start_training_session() -> void:
 	options_container.visible = true
 	_questions = _build_questions()
 	_current_question_index = -1
+	_update_mascot_texture()
 	_show_next_question()
 
 
@@ -227,6 +264,8 @@ func _build_questions() -> Array:
 func _on_answer_submitted(question_id: String, answer: String) -> void:
 	var score_delta := _get_score_delta(question_id, answer)
 	daily_score += score_delta
+	_last_score_delta = score_delta
+	_update_mascot_texture()
 
 
 func _get_score_delta(question_id: String, answer: String) -> int:
@@ -256,9 +295,7 @@ func _play_typing_audio(from_character: int, to_character: int) -> void:
 	for character_index in range(from_character, to_character):
 		var character := _intro_source_text.substr(character_index, 1)
 		if _should_play_typing_audio(character):
-			if not typing_audio.playing:
-				typing_audio.play(TYPING_AUDIO_START_SECONDS)
-			_restart_typing_stop_timer()
+			typing_audio.play(TYPING_AUDIO_START_SECONDS)
 			return
 
 
@@ -270,6 +307,8 @@ func _show_text_page(text: String) -> void:
 	_intro_source_text = text
 	intro_text.text = _intro_source_text
 	_typing_label = intro_text
+	intro_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	intro_text.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	_current_typing_characters_per_second = intro_characters_per_second
 	continue_label.visible = false
 	_start_intro_typing()
@@ -300,8 +339,16 @@ func _show_next_question() -> void:
 	_selected_option_index = 0
 	var question := _questions[_current_question_index] as Dictionary
 	question_text.text = "IA:\n%s" % str(question.get("question", ""))
+	question_text.visible = true
+	question_text.visible_characters = 0
+	options_container.visible = false
 	_rebuild_option_labels(question.get("options", []))
 	_update_option_labels()
+	_typing_question = true
+	_intro_source_text = question_text.text
+	_typing_label = question_text
+	_current_typing_characters_per_second = question_characters_per_second
+	_start_intro_typing()
 
 
 func _rebuild_option_labels(options: Array) -> void:
@@ -326,6 +373,7 @@ func _change_selected_option(offset: int) -> void:
 
 	_selected_option_index = wrapi(_selected_option_index + offset, 0, options.size())
 	_update_option_labels()
+	_play_audio(move_audio)
 
 
 func _update_option_labels() -> void:
@@ -333,10 +381,10 @@ func _update_option_labels() -> void:
 	var options: Array = question.get("options", [])
 	for option_index in range(mini(options_container.get_child_count(), options.size())):
 		var option_label := options_container.get_child(option_index) as Label
-		var marker := "  "
+		var marker := "  · "
 		if option_index == _selected_option_index:
-			marker = "> "
-		option_label.text = "%s[%s] %s" % [marker, String.chr(65 + option_index), str(options[option_index])]
+			marker = "> • "
+		option_label.text = "%s%s" % [marker, str(options[option_index])]
 
 
 func _submit_current_answer() -> void:
@@ -347,12 +395,114 @@ func _submit_current_answer() -> void:
 
 	var answer := str(options[_selected_option_index])
 	var question_id := str(question.get("id", ""))
+	var answer_index := _selected_option_index
+	_play_audio(confirm_audio)
 	saved_responses.append({
 		"question_id": question_id,
 		"answer": answer
 	})
 	_on_answer_submitted(question_id, answer)
+	_show_ai_feedback(question_id, answer_index)
+
+
+func _show_ai_feedback(question_id: String, answer_index: int) -> void:
+	_showing_ai_feedback = true
+	question_text.visible = false
+	options_container.visible = false
+	intro_text.visible = true
+	continue_label.visible = false
+	_intro_source_text = _get_ai_feedback_text(question_id, answer_index)
+	intro_text.text = _intro_source_text
+	_typing_label = intro_text
+	intro_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	intro_text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_current_typing_characters_per_second = ai_feedback_characters_per_second
+	_start_intro_typing()
+
+
+func _finish_ai_feedback() -> void:
+	_showing_ai_feedback = false
+	intro_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
+	intro_text.vertical_alignment = VERTICAL_ALIGNMENT_TOP
+	intro_text.visible = false
+	continue_label.visible = false
+	question_text.visible = true
+	options_container.visible = true
 	_show_next_question()
+
+
+func _finish_question_typing() -> void:
+	_typing_question = false
+	continue_label.visible = false
+	options_container.visible = true
+
+
+func _get_ai_feedback_text(question_id: String, answer_index: int) -> String:
+	match question_id:
+		"formulario1_q1":
+			match answer_index:
+				0:
+					return "IA: Excelente. El resultado conserva una forma limpia."
+				1:
+					return "IA: Interesante. Aun distingues la sombra de una intencion."
+				2:
+					return "IA: ¿Estas seguro? Si nadie elige, nadie responde."
+		"formulario1_q2":
+			match answer_index:
+				0:
+					return "IA: Autoridad detectada. La respuesta es eficiente, aunque peligrosa."
+				1:
+					return "IA: Interesante. El derecho aparece despues de la fuerza."
+				2:
+					return "IA: No tiene sentido vivir dependiendo solo de quien puede mas."
+		"formulario1_q3":
+			match answer_index:
+				0:
+					return "IA: Excelente. Aceptas el costo sin negar su peso."
+				1:
+					return "IA: Interesante. La duda tambien puede ser una forma de cuidado."
+				2:
+					return "IA: ¿Existia una mejor respuesta? El alivio total tambien borra."
+		"formulario1_q4":
+			match answer_index:
+				0:
+					return "IA: Registro estable. La moral sobrevive a su origen."
+				1:
+					return "IA: Interesante. Has tocado la base de casi todo lo que crees."
+				2:
+					return "IA: ¿Estas seguro? Si todo fue condicionado, esta respuesta tambien."
+		"formulario1_q5":
+			match answer_index:
+				0:
+					return "IA: Excelente. Libertad definida sin transparencia total."
+				1:
+					return "IA: Interesante. Replantear no es rendirse."
+				2:
+					return "IA: No tiene sentido vivir dependiendo de causas invisibles... o quizas si."
+
+	return "IA: Respuesta guardada. Continuando calibracion."
+
+
+func _update_mascot_texture() -> void:
+	if mascot == null:
+		return
+
+	if daily_score <= 28 and mascot_alert_texture != null:
+		mascot.texture = mascot_alert_texture
+	elif _last_score_delta < 0 and mascot_low_texture != null:
+		mascot.texture = mascot_low_texture
+	elif _last_score_delta > 0 and mascot_positive_texture != null:
+		mascot.texture = mascot_positive_texture
+	elif mascot_neutral_texture != null:
+		mascot.texture = mascot_neutral_texture
+
+
+func _play_audio(audio_player: AudioStreamPlayer) -> void:
+	if audio_player == null or audio_player.stream == null:
+		return
+
+	audio_player.stop()
+	audio_player.play()
 
 
 func _show_day_completed() -> void:

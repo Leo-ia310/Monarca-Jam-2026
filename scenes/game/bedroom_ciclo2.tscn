@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d1odhvesudb1r"]
 
 [ext_resource type="Script" path="res://scripts/game/bedroom_ciclo2.gd" id="1_script"]
-[ext_resource type="Texture2D" uid="uid://u3cxxh06eevv" path="res://assets/ui/bedroom_background.png" id="2_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/bedroom_ciclo2_background.png" id="2_background"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="3_dialogue_box"]
-[ext_resource type="AudioStream" uid="uid://dbma3ycrtaaui" path="res://assets/audio/mixkit-footsteps-on-heels-on-the-pavement-542.wav" id="4_footsteps"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-footsteps-on-mattress-loop-534.wav" id="4_footsteps"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-creaky-door-open-195.wav" id="5_door"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-warning-alarm-buzzer-991.wav" id="6_alarm"]
 

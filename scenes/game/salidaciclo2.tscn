@@ -1,0 +1,75 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/salidaciclo2.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="2_dialogue_box"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-keys-moving-1558.wav" id="3_keys"]
+[ext_resource type="Texture2D" path="res://assets/ui/exit_background.png" id="4_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/exit_background_key.png" id="5_key_background"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-glitch-static-1457.wav" id="6_glitch_static"]
+
+[node name="SalidaCiclo2" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+key_background_texture = ExtResource("5_key_background")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("4_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DialogueBox" parent="." instance=ExtResource("2_dialogue_box")]
+visible = true
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 75.0
+offset_top = 534.0
+offset_right = 720.0
+offset_bottom = 675.0
+grow_horizontal = 1
+grow_vertical = 1
+use_manual_box_rect = true
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 38.0
+content_margin_bottom = 24.0
+
+[node name="DialogueContent" parent="DialogueBox/ContentMargin" index="0"]
+theme_override_constants/separation = 4
+
+[node name="DialogueText" parent="DialogueBox/ContentMargin/DialogueContent" index="1"]
+theme_override_font_sizes/normal_font_size = 18
+
+[node name="ContinueRow" parent="DialogueBox/ContentMargin/DialogueContent" index="2"]
+custom_minimum_size = Vector2(1, 18)
+
+[node name="FadeRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="KeysAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_keys")
+bus = &"SFX"
+
+[node name="GlitchStaticAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_glitch_static")
+bus = &"SFX"
