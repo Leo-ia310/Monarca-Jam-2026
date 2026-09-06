@@ -1,6 +1,6 @@
 extends Control
 
-const COGNIS_WELCOME_PATH := "res://scenes/story/cognis_welcome.tscn"
+const HEADPHONES_NOTICE_PATH := "res://scenes/menus/headphones_notice.tscn"
 const OPTIONS_MENU_PATH := "res://scenes/menus/options_menu.tscn"
 const CREDITS_MENU_PATH := "res://scenes/menus/credits_menu.tscn"
 
@@ -32,7 +32,7 @@ func _configure_focus_chain(controls: Array[Control]) -> void:
 
 
 func _on_play_pressed() -> void:
-	get_tree().change_scene_to_file(COGNIS_WELCOME_PATH)
+	get_tree().change_scene_to_file(HEADPHONES_NOTICE_PATH)
 
 
 func _on_options_pressed() -> void:
