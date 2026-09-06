@@ -7,15 +7,24 @@ signal questionnaire_finished(responses: Array)
 const TYPE_CHOICE := "choice"
 const TYPE_TEXT := "text"
 const RAT_FONT_PATH := "res://assets/fonts/rat-typewriter.ttf"
+const TYPING_AUDIO_START_SECONDS := 7.0
 
 @export var show_question_number: bool = true
+@export var typing_audio_stop_delay: float = 0.12
+@export var show_background: bool = true
+@export var use_manual_panel_rect: bool = false
 
+@onready var background := $Background as TextureRect
+@onready var root_margin := $RootMargin as MarginContainer
 @onready var counter_label := $RootMargin/TerminalPanel/Content/CounterLabel as Label
 @onready var question_label := $RootMargin/TerminalPanel/Content/QuestionLabel as RichTextLabel
 @onready var options_container := $RootMargin/TerminalPanel/Content/OptionsContainer as VBoxContainer
 @onready var answer_input := $RootMargin/TerminalPanel/Content/AnswerInput as LineEdit
 @onready var word_count_label := $RootMargin/TerminalPanel/Content/WordCountLabel as Label
 @onready var hint_label := $RootMargin/TerminalPanel/Content/HintLabel as Label
+@onready var typing_audio := $TypingAudio as AudioStreamPlayer
+@onready var move_audio := $MoveAudio as AudioStreamPlayer
+@onready var confirm_audio := $ConfirmAudio as AudioStreamPlayer
 
 var questions: Array = []
 var responses: Array[Dictionary] = []
@@ -25,14 +34,32 @@ var selected_option_index := 0
 var input_locked := false
 var _word_regex := RegEx.new()
 var _ui_font: Font
+var _standalone_preview := false
+var _typing_stop_timer: SceneTreeTimer
 
 
 func _ready() -> void:
+	background.visible = show_background
+	if use_manual_panel_rect:
+		root_margin.set_anchors_preset(Control.PRESET_FULL_RECT)
+		root_margin.offset_left = 0.0
+		root_margin.offset_top = 0.0
+		root_margin.offset_right = 0.0
+		root_margin.offset_bottom = 0.0
+
 	_ui_font = load(RAT_FONT_PATH)
 	_word_regex.compile("\\S+")
 	answer_input.text_changed.connect(_on_answer_input_text_changed)
 	answer_input.text_submitted.connect(_on_answer_input_submitted)
-	visible = false
+	if get_tree().current_scene == self:
+		_standalone_preview = true
+		_start_preview_questions()
+	else:
+		visible = false
+
+
+func _exit_tree() -> void:
+	_stop_typing_audio()
 
 
 func start_questions(new_questions: Array) -> void:
@@ -82,6 +109,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _show_next_question() -> void:
 	input_locked = true
+	_stop_typing_audio()
 	current_index += 1
 
 	if current_index >= questions.size():
@@ -122,8 +150,9 @@ func _setup_choice_question() -> void:
 		var option_label := Label.new()
 		option_label.name = "Option%d" % option_index
 		option_label.add_theme_font_override("font", _ui_font)
-		option_label.add_theme_font_size_override("font_size", 24)
+		option_label.add_theme_font_size_override("font_size", 16)
 		option_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		option_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		options_container.add_child(option_label)
 
 	_update_choice_options()
@@ -144,11 +173,13 @@ func _change_selected_option(offset: int) -> void:
 
 	selected_option_index = wrapi(selected_option_index + offset, 0, options.size())
 	_update_choice_options()
+	_play_audio(move_audio)
 
 
 func _update_choice_options() -> void:
 	var options: Array = current_line.get("options", [])
-	for option_index in range(options_container.get_child_count()):
+	var visible_option_count = mini(options_container.get_child_count(), options.size())
+	for option_index in range(visible_option_count):
 		var option_label := options_container.get_child(option_index) as Label
 		var prefix := "  "
 		if option_index == selected_option_index:
@@ -162,6 +193,7 @@ func _submit_choice_answer() -> void:
 	if options.is_empty():
 		return
 
+	_play_audio(confirm_audio)
 	_submit_answer(str(options[selected_option_index]))
 
 
@@ -183,6 +215,8 @@ func _try_submit_text_answer() -> void:
 		_update_word_count_label()
 		return
 
+	_stop_typing_audio()
+	_play_audio(confirm_audio)
 	_submit_answer(answer)
 
 
@@ -200,20 +234,27 @@ func _submit_answer(answer: String) -> void:
 
 func _finish_questionnaire() -> void:
 	input_locked = true
+	_stop_typing_audio()
 	current_line = {}
 	_clear_options()
 	answer_input.hide()
 	counter_label.text = ""
-	question_label.text = ""
 	word_count_label.text = ""
 	hint_label.text = ""
-	visible = false
+	if _standalone_preview:
+		question_label.text = "[center]RESPUESTAS REGISTRADAS[/center]"
+		visible = true
+	else:
+		question_label.text = ""
+		visible = false
 	questionnaire_finished.emit(get_responses())
 
 
 func _on_answer_input_text_changed(_new_text: String) -> void:
 	if current_line.get("type", TYPE_CHOICE) == TYPE_TEXT:
 		_update_word_count_label()
+		if not _new_text.is_empty():
+			_play_typing_audio()
 
 
 func _update_word_count_label() -> void:
@@ -230,8 +271,67 @@ func _update_word_count_label() -> void:
 
 func _clear_options() -> void:
 	for child in options_container.get_children():
+		options_container.remove_child(child)
 		child.queue_free()
 
 
 func _get_current_question_id() -> String:
 	return str(current_line.get("id", "q%d" % [current_index + 1]))
+
+
+func _start_preview_questions() -> void:
+	start_questions([
+		{
+			"id": "preview_1",
+			"question": "¿Consideras que una inteligencia artificial puede cometer errores?",
+			"type": "choice",
+			"options": ["Sí", "No", "Depende"]
+		},
+		{
+			"id": "preview_2",
+			"question": "Si alguien comete un error, ¿qué debería hacerse?",
+			"type": "text",
+			"min_words": 1,
+			"max_words": 8
+		},
+		{
+			"id": "preview_3",
+			"question": "¿Confías en mí?",
+			"type": "text",
+			"min_words": 1,
+			"max_words": 3
+		}
+	])
+
+
+func _play_audio(audio_player: AudioStreamPlayer) -> void:
+	if audio_player == null or audio_player.stream == null:
+		return
+
+	audio_player.stop()
+	audio_player.play()
+
+
+func _play_typing_audio() -> void:
+	if typing_audio == null or typing_audio.stream == null:
+		return
+
+	if not typing_audio.playing:
+		typing_audio.play(TYPING_AUDIO_START_SECONDS)
+
+	_restart_typing_stop_timer()
+
+
+func _restart_typing_stop_timer() -> void:
+	_typing_stop_timer = get_tree().create_timer(typing_audio_stop_delay)
+	var timer := _typing_stop_timer
+	await timer.timeout
+
+	if timer == _typing_stop_timer:
+		_stop_typing_audio()
+
+
+func _stop_typing_audio() -> void:
+	_typing_stop_timer = null
+	if typing_audio != null:
+		typing_audio.stop()

@@ -1,0 +1,142 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvel6nwkl0pjh"]
+
+[ext_resource type="Script" uid="uid://c8rb5f0e0p7m5" path="res://scripts/game/formulario1.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bhqrm2vg7rlyt" path="res://assets/ui/formulario1_background.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="3_font"]
+[ext_resource type="AudioStream" uid="uid://dd4sn6x3si7um" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="5_typing_audio"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
+bg_color = Color(0.01, 0.008, 0.025, 0.78)
+
+[node name="Formulario1" type="Control" unique_id=729778143]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2076281029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="TerminalPanel" type="Panel" parent="." unique_id=1801347358]
+layout_mode = 1
+offset_left = 468.0
+offset_top = 246.0
+offset_right = 1058.0
+offset_bottom = 532.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
+
+[node name="IntroText" type="RichTextLabel" parent="TerminalPanel" unique_id=366107423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_fonts/bold_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+text = "COGNIS SYSTEMS"
+scroll_active = false
+
+[node name="ContinueLabel" type="Label" parent="TerminalPanel" unique_id=424372715]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -34.0
+offset_right = -18.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+text = "Presiona Enter para continuar"
+horizontal_alignment = 2
+
+[node name="QuestionText" type="RichTextLabel" parent="TerminalPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_fonts/bold_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+bbcode_enabled = true
+text = "IA:"
+scroll_active = false
+autowrap_mode = 3
+
+[node name="OptionsContainer" type="VBoxContainer" parent="TerminalPanel"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 138.0
+offset_right = -18.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=1316759037]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CompletionText" type="RichTextLabel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 54
+bbcode_enabled = false
+text = "DIA COMPLETADO"
+fit_content = false
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=1778263116]
+stream = ExtResource("5_typing_audio")
+bus = &"SFX"

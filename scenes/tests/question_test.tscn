@@ -1,15 +1,15 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://c07yitr7jiqcv"]
 
-[ext_resource type="Script" path="res://scripts/tests/question_test.gd" id="1_script"]
-[ext_resource type="PackedScene" path="res://scenes/ui/question_system.tscn" id="2_question_system"]
-[ext_resource type="FontFile" path="res://assets/fonts/rat-typewriter.ttf" id="3_font"]
+[ext_resource type="Script" uid="uid://bmdefqvdplcm2" path="res://scripts/tests/question_test.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://dd6tnx4p0hwdv" path="res://scenes/ui/question_system.tscn" id="2_question_system"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="3_font"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_finished"]
 font = ExtResource("3_font")
 font_size = 32
 font_color = Color(0.86, 0.95, 1, 1)
 
-[node name="QuestionTest" type="Control"]
+[node name="QuestionTest" type="Control" unique_id=908113366]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,20 +18,20 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="QuestionSystem" parent="." instance=ExtResource("2_question_system")]
+[node name="QuestionSystem" parent="." unique_id=746487326 instance=ExtResource("2_question_system")]
 layout_mode = 1
 
-[node name="FinishedLabel" type="Label" parent="."]
+[node name="FinishedLabel" type="Label" parent="." unique_id=1658548836]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -220.0
-offset_top = -24.0
-offset_right = 220.0
-offset_bottom = 24.0
+offset_left = -381.0
+offset_top = 8.0
+offset_right = 131.0
+offset_bottom = 56.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "RESPUESTAS REGISTRADAS"

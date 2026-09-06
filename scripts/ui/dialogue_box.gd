@@ -5,7 +5,9 @@ signal line_started
 signal line_finished
 signal dialogue_finished
 
-@export var characters_per_second: float = 35.0
+@export var characters_per_second: float = 24.0
+@export var use_manual_box_rect: bool = false
+@export var manual_box_rect := Rect2(140.0, 332.0, 1000.0, 368.0)
 @export var base_box_size := Vector2(920.0, 368.0)
 @export var bottom_margin: float = 20.0
 @export var max_width_ratio: float = 0.88
@@ -173,6 +175,18 @@ func _update_layout() -> void:
 	if dialogue_texture == null or content_margin == null:
 		return
 
+	if use_manual_box_rect:
+		var box_size := size
+		if box_size.x <= 0.0 or box_size.y <= 0.0:
+			box_size = manual_box_rect.size
+
+		dialogue_texture.position = Vector2.ZERO
+		dialogue_texture.size = box_size
+		content_margin.position = Vector2.ZERO
+		content_margin.size = box_size
+		_update_content_margins(1.0)
+		return
+
 	var viewport_size := Vector2(get_viewport_rect().size)
 	var width_scale := viewport_size.x * max_width_ratio / base_box_size.x
 	var height_scale := viewport_size.y * max_height_ratio / base_box_size.y
@@ -188,6 +202,10 @@ func _update_layout() -> void:
 	content_margin.position = box_position
 	content_margin.size = box_size
 
+	_update_content_margins(scale)
+
+
+func _update_content_margins(scale: float) -> void:
 	content_margin.add_theme_constant_override("margin_left", int(round(content_margin_left * scale)))
 	content_margin.add_theme_constant_override("margin_top", int(round(content_margin_top * scale)))
 	content_margin.add_theme_constant_override("margin_right", int(round(content_margin_right * scale)))

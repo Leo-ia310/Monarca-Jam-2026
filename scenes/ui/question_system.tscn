@@ -1,9 +1,16 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://dd6tnx4p0hwdv"]
 
-[ext_resource type="Script" path="res://scripts/ui/question_system.gd" id="1_script"]
-[ext_resource type="FontFile" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
+[ext_resource type="Script" uid="uid://cqgxoow7g8q0m" path="res://scripts/ui/question_system.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://bonn4sx188he6" path="res://assets/ui/question_system_background.png" id="3_background"]
+[ext_resource type="AudioStream" uid="uid://dd4sn6x3si7um" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="4_typing_sound"]
+[ext_resource type="AudioStream" uid="uid://8285kmva67w" path="res://assets/audio/mixkit-short-bass-hit-2299.wav" id="5_move_sound"]
+[ext_resource type="AudioStream" uid="uid://bkh8n88px5j4p" path="res://assets/audio/mixkit-fast-double-click-on-mouse-275.wav" id="6_confirm_sound"]
 
-[node name="QuestionSystem" type="Control"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
+bg_color = Color(0.01, 0.008, 0.025, 0.78)
+
+[node name="QuestionSystem" type="Control" unique_id=1238820530]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -12,7 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=2057384010]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -20,71 +27,92 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.005, 0.006, 0.009, 0.94)
+texture = ExtResource("3_background")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="RootMargin" type="MarginContainer" parent="."]
+[node name="RootMargin" type="MarginContainer" parent="." unique_id=1422410251]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = -1
+anchor_left = 0.365
+anchor_top = 0.29
+anchor_right = 0.825
+anchor_bottom = 0.755
+offset_left = -20.200012
+offset_top = 20.200012
+offset_right = 23.0
+offset_bottom = 4.4000244
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 96
-theme_override_constants/margin_top = 72
-theme_override_constants/margin_right = 96
-theme_override_constants/margin_bottom = 72
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 16
 
-[node name="TerminalPanel" type="PanelContainer" parent="RootMargin"]
+[node name="TerminalPanel" type="PanelContainer" parent="RootMargin" unique_id=29130807]
 layout_mode = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
 
-[node name="Content" type="VBoxContainer" parent="RootMargin/TerminalPanel"]
+[node name="Content" type="VBoxContainer" parent="RootMargin/TerminalPanel" unique_id=2016123783]
 layout_mode = 2
-theme_override_constants/separation = 18
+theme_override_constants/separation = 10
 
-[node name="CounterLabel" type="Label" parent="RootMargin/TerminalPanel/Content"]
+[node name="CounterLabel" type="Label" parent="RootMargin/TerminalPanel/Content" unique_id=1488712420]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 16
 text = "Pregunta 1 / 3"
 
-[node name="QuestionLabel" type="RichTextLabel" parent="RootMargin/TerminalPanel/Content"]
-custom_minimum_size = Vector2(600, 150)
+[node name="QuestionLabel" type="RichTextLabel" parent="RootMargin/TerminalPanel/Content" unique_id=1749582509]
+custom_minimum_size = Vector2(1, 96)
 layout_mode = 2
 size_flags_horizontal = 3
+size_flags_vertical = 3
 mouse_filter = 2
 theme_override_fonts/normal_font = ExtResource("2_font")
 theme_override_fonts/bold_font = ExtResource("2_font")
-theme_override_font_sizes/normal_font_size = 26
-theme_override_font_sizes/bold_font_size = 26
+theme_override_font_sizes/normal_font_size = 21
+theme_override_font_sizes/bold_font_size = 21
 bbcode_enabled = true
 text = "[b]IA:[/b]
 Pregunta placeholder"
 scroll_active = false
-autowrap_mode = 3
 
-[node name="OptionsContainer" type="VBoxContainer" parent="RootMargin/TerminalPanel/Content"]
+[node name="OptionsContainer" type="VBoxContainer" parent="RootMargin/TerminalPanel/Content" unique_id=290010834]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 8
 
-[node name="AnswerInput" type="LineEdit" parent="RootMargin/TerminalPanel/Content"]
-custom_minimum_size = Vector2(1, 44)
+[node name="AnswerInput" type="LineEdit" parent="RootMargin/TerminalPanel/Content" unique_id=1678401300]
+custom_minimum_size = Vector2(1, 36)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 20
 placeholder_text = "Respuesta"
 
-[node name="WordCountLabel" type="Label" parent="RootMargin/TerminalPanel/Content"]
+[node name="WordCountLabel" type="Label" parent="RootMargin/TerminalPanel/Content" unique_id=484016393]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 15
 text = "0 / 8 palabras"
 
-[node name="HintLabel" type="Label" parent="RootMargin/TerminalPanel/Content"]
+[node name="HintLabel" type="Label" parent="RootMargin/TerminalPanel/Content" unique_id=750994609]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 18
+theme_override_font_sizes/font_size = 15
 text = "W/S o flechas para seleccionar. Enter para confirmar."
 autowrap_mode = 3
+
+[node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=684138307]
+stream = ExtResource("4_typing_sound")
+bus = &"SFX"
+
+[node name="MoveAudio" type="AudioStreamPlayer" parent="." unique_id=1857879455]
+stream = ExtResource("5_move_sound")
+bus = &"SFX"
+
+[node name="ConfirmAudio" type="AudioStreamPlayer" parent="." unique_id=1213104903]
+stream = ExtResource("6_confirm_sound")
+bus = &"SFX"
