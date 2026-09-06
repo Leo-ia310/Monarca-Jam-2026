@@ -54,6 +54,14 @@ func _try_connect_button(node: Node) -> void:
 
 
 func _on_button_pressed() -> void:
+	play_click()
+
+
+func _on_button_hovered() -> void:
+	play_hover()
+
+
+func play_click() -> void:
 	if _click_player == null or _click_player.stream == null:
 		return
 
@@ -62,7 +70,7 @@ func _on_button_pressed() -> void:
 	_click_player.play()
 
 
-func _on_button_hovered() -> void:
+func play_hover() -> void:
 	if _hover_player == null or _hover_player.stream == null:
 		return
 

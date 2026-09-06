@@ -6,9 +6,8 @@ const TYPING_AUDIO_START_SECONDS := 7.0
 @export var fade_in_duration: float = 0.7
 @export var fade_out_duration: float = 2.5
 @export var intro_delay: float = 2.5
-@export var characters_per_second: float = 120.0
+@export var characters_per_second: float = 24.0
 @export var transition_zoom_scale: float = 1.05
-@export var typing_audio_pitch_scale: float = 1.18
 
 @onready var background := $Background as TextureRect
 @onready var content_root := $PageMargin/ContentRoot as VBoxContainer
@@ -100,7 +99,7 @@ func _start_typing() -> void:
 	_current_character = 0
 	_character_progress = 0.0
 	if typing_audio != null:
-		typing_audio.pitch_scale = typing_audio_pitch_scale
+		typing_audio.pitch_scale = 1.0
 	story_text.visible_characters = 0
 
 
@@ -158,9 +157,8 @@ func _play_typing_audio(from_character: int, to_character: int) -> void:
 	for character_index in range(from_character, to_character):
 		var character := _typing_text.substr(character_index, 1)
 		if _should_play_typing_audio(character):
-			typing_audio.pitch_scale = typing_audio_pitch_scale
-			if not typing_audio.playing:
-				typing_audio.play(TYPING_AUDIO_START_SECONDS)
+			typing_audio.pitch_scale = 1.0
+			typing_audio.play(TYPING_AUDIO_START_SECONDS)
 			return
 
 

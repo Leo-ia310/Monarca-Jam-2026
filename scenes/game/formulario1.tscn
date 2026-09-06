@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://bvel6nwkl0pjh"]
+[gd_scene load_steps=12 format=3 uid="uid://bvel6nwkl0pjh"]
 
 [ext_resource type="Script" uid="uid://c8rb5f0e0p7m5" path="res://scripts/game/formulario1.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://bhqrm2vg7rlyt" path="res://assets/ui/formulario1_background.png" id="2_background"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://m3c2e67r022j" path="res://assets/ui/cognis_mascot_neutral.png" id="8_mascot_neutral"]
 [ext_resource type="Texture2D" uid="uid://dyoha78bxqi45" path="res://assets/ui/cognis_mascot_low.png" id="9_mascot_low"]
 [ext_resource type="Texture2D" uid="uid://dcei1hsgy0whc" path="res://assets/ui/cognis_mascot_alert.png" id="10_mascot_alert"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="11_dialogue_box"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
 bg_color = Color(0.01, 0.008, 0.025, 0.78)
@@ -41,9 +42,10 @@ stretch_mode = 6
 
 [node name="BootOverlay" type="Control" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+offset_left = 468.0
+offset_top = 246.0
+offset_right = 1058.0
+offset_bottom = 532.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -150,6 +152,7 @@ theme_override_fonts/normal_font = ExtResource("3_font")
 theme_override_fonts/bold_font = ExtResource("3_font")
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
+bbcode_enabled = true
 text = "COGNIS SYSTEMS"
 scroll_active = false
 
@@ -229,6 +232,25 @@ text = "DIA COMPLETADO"
 scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="PlayerDialogueBox" parent="." instance=ExtResource("11_dialogue_box")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 75.0
+offset_top = 534.0
+offset_right = 940.0
+offset_bottom = 675.0
+grow_horizontal = 1
+grow_vertical = 1
+characters_per_second = 24.0
+use_manual_box_rect = true
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
 
 [node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=1778263116]
 stream = ExtResource("5_typing_audio")

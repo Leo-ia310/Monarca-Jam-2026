@@ -35,6 +35,26 @@ func _ready() -> void:
 		{
 			"speaker": "",
 			"text": "*suspiro* que pereza levantarse"
+		},
+		{
+			"speaker": "",
+			"text": "Me pregunto por qué seguiré pensando en la entrevista de trabajo."
+		},
+		{
+			"speaker": "",
+			"text": "En fin. Hay que levantarse."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "La habitación parece pequeña."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Hay poco espacio entre la cama, el escritorio y el resto de los muebles."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "No hay demasiadas cosas alrededor; solo lo necesario para el día a día."
 		}
 	])
 

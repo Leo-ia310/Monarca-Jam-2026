@@ -11,18 +11,32 @@ const NEXT_SCENE_PATH := "res://scenes/game/formulariociclo2.tscn"
 @onready var fade_rect := $FadeRect as ColorRect
 @onready var keys_audio := $KeysAudio as AudioStreamPlayer
 @onready var glitch_static_audio := $GlitchStaticAudio as AudioStreamPlayer
+@onready var glitch_overlay := $GlitchOverlay as ColorRect
+@onready var glitch_eyes := $GlitchEyes as TextureRect
 
 var _key_background_started := false
 var _transition_started := false
+var _rng := RandomNumberGenerator.new()
+var _background_start_position := Vector2.ZERO
+var _dialogue_start_position := Vector2.ZERO
+var _glitch_eyes_start_position := Vector2.ZERO
 
 
 func _ready() -> void:
+	_rng.randomize()
 	dialogue_box.line_started.connect(_on_dialogue_line_started)
 	dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	dialogue_box.visible = false
+	glitch_overlay.visible = false
+	glitch_overlay.modulate.a = 0.0
+	glitch_eyes.visible = false
+	glitch_eyes.modulate.a = 0.0
 	fade_rect.visible = true
 	fade_rect.color = Color.BLACK
 	fade_rect.modulate.a = 1.0
+	_background_start_position = background.position
+	_dialogue_start_position = dialogue_box.position
+	_glitch_eyes_start_position = glitch_eyes.position
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
@@ -87,7 +101,34 @@ func _swap_to_key_background() -> void:
 
 func _play_glitch() -> void:
 	if glitch_static_audio != null and glitch_static_audio.stream != null:
+		glitch_static_audio.stop()
 		glitch_static_audio.play()
+
+	glitch_overlay.visible = true
+	glitch_eyes.visible = true
+	var glitch_colors := [
+		Color(0.85, 0.0, 1.0, 0.22),
+		Color(1.0, 0.08, 0.72, 0.22),
+		Color(0.1, 1.0, 0.35, 0.18)
+	]
+
+	for shake_index in range(12):
+		var shake_offset := Vector2(_rng.randf_range(-8.0, 8.0), _rng.randf_range(-5.0, 5.0))
+		background.position = _background_start_position + shake_offset * 0.35
+		dialogue_box.position = _dialogue_start_position + shake_offset
+		glitch_eyes.position = _glitch_eyes_start_position - shake_offset * 0.45
+		glitch_eyes.modulate.a = _rng.randf_range(0.62, 1.0)
+		glitch_overlay.color = glitch_colors[_rng.randi_range(0, glitch_colors.size() - 1)]
+		glitch_overlay.modulate.a = _rng.randf_range(0.45, 0.85)
+		await get_tree().create_timer(0.035).timeout
+
+	background.position = _background_start_position
+	dialogue_box.position = _dialogue_start_position
+	glitch_eyes.position = _glitch_eyes_start_position
+	glitch_eyes.modulate.a = 0.0
+	glitch_eyes.visible = false
+	glitch_overlay.modulate.a = 0.0
+	glitch_overlay.visible = false
 
 
 func _go_to_next_scene() -> void:

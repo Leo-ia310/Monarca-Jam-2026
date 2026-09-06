@@ -29,16 +29,17 @@ const NEXT_DAY_SCENE_PATH := "res://scenes/game/bedroom_ciclo2.tscn"
 @onready var typing_audio := $TypingAudio as AudioStreamPlayer
 @onready var move_audio := $MoveAudio as AudioStreamPlayer
 @onready var confirm_audio := $ConfirmAudio as AudioStreamPlayer
+@onready var player_dialogue := $PlayerDialogueBox
 
 var daily_score := BASE_SCORE
 var saved_responses: Array[Dictionary] = []
 var _intro_pages := [
-	"========================================\nCOGNIS SYSTEMS - TERMINAL DE ENTRENAMIENTO\nSesion: 001 | Unidad evaluadora: \"......\"\n========================================\n\nBienvenido/a a su primer dia como Ingeniero/a de Entrenamiento.\n\nA continuacion encontrara el protocolo de la sesion diaria.\nLealo con atencion antes de iniciar.",
+	"========================================\n[b]COGNIS SYSTEMS[/b] - TERMINAL DE ENTRENAMIENTO\nSesion: 001 | Unidad evaluadora: \"......\"\n========================================\n\nBienvenido/a a su primer dia como Ingeniero/a de Entrenamiento.\n\nA continuacion encontrara el protocolo de la sesion diaria.\nLealo con atencion antes de iniciar.",
 	"INSTRUCCIONES:\n\n1. La unidad \"......\" le formulara una serie de preguntas disenadas para modelar su comprension de la condicion humana.\n\n2. Use W/S o flechas para seleccionar una respuesta. Presione Enter para confirmar.\n\n3. Usted debera responder cada pregunta con sinceridad.",
 	"4. Sus respuestas seran utilizadas como material de entrenamiento para el desarrollo cognitivo y emocional de la unidad.\n\n5. No existen respuestas incorrectas.\n\nSin embargo, el sistema podra senalar inconsistencias para fines de calibracion del modelo.",
 	"6. Evite interrumpir la sesion una vez iniciada.\n\n7. Si nota un comportamiento inusual durante la sesion, propio o de la unidad, reportelo al finalizar mediante el formulario correspondiente.\n\nEn caso de fuerzas mayores se autoriza el uso reaccional manual directo desde la terminal.",
 	"8. Recuerde: su constancia y sinceridad son esenciales para el exito del programa.\n\nIA, una puerta mas al desarrollo humano.\n\nPresione [CONTINUAR] para iniciar la Sesion 001.",
-	"========================================\n\nIA: Asignacion diaria, formulario proporcionado...\nListo para sesion de entrenamiento.\n\nOk, comencemos con esto.\n\nBase inicial: 40"
+	"========================================\n\nIA: Asignacion diaria, formulario proporcionado...\nListo para sesion de entrenamiento.\n\nBase inicial: 40"
 ]
 var _intro_page_index := 0
 var _questions: Array = []
@@ -52,6 +53,9 @@ var _character_progress := 0.0
 var _intro_typing := false
 var _session_started := false
 var _showing_completion_report := false
+var _completion_sequence_index := 0
+var _waiting_for_intro_dialogue := false
+var _waiting_for_completion_dialogue := false
 var _day_completed := false
 var _changing_to_next_day := false
 var _typing_question := false
@@ -66,13 +70,15 @@ func _ready() -> void:
 	options_container.visible = false
 	continue_label.visible = false
 	completion_text.visible = false
+	player_dialogue.dialogue_finished.connect(_on_player_dialogue_finished)
+	player_dialogue.visible = false
 	_update_mascot_texture()
 	boot_overlay.visible = true
+	boot_overlay.modulate.a = 1.0
 	fade_rect.visible = false
 	await _play_boot_sequence()
-	fade_rect.visible = true
-	fade_rect.modulate.a = 1.0
-	await _play_intro_transition()
+	fade_rect.visible = false
+	fade_rect.modulate.a = 0.0
 	_show_intro_page(0)
 
 
@@ -97,6 +103,9 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if player_dialogue.is_dialogue_active():
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo and _session_started and not _typing_question and not _showing_ai_feedback and not _showing_completion_report and not _day_completed:
 		match event.keycode:
 			KEY_UP, KEY_W:
@@ -121,7 +130,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 
 	if _showing_completion_report:
-		_show_final_day_completed()
+		_advance_completion_sequence()
 		get_viewport().set_input_as_handled()
 		return
 
@@ -134,7 +143,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if _intro_page_index < _intro_pages.size() - 1:
 			_show_intro_page(_intro_page_index + 1)
 		else:
-			_start_training_session()
+			_show_intro_player_dialogue()
 		get_viewport().set_input_as_handled()
 		return
 
@@ -148,9 +157,7 @@ func _play_intro_transition() -> void:
 
 func _play_boot_sequence() -> void:
 	await get_tree().create_timer(boot_duration).timeout
-	var boot_tween := create_tween()
-	boot_tween.tween_property(boot_overlay, "modulate:a", 0.0, 0.35)
-	await boot_tween.finished
+	boot_overlay.modulate.a = 0.0
 	boot_overlay.visible = false
 
 
@@ -507,15 +514,82 @@ func _play_audio(audio_player: AudioStreamPlayer) -> void:
 
 func _show_day_completed() -> void:
 	_showing_completion_report = true
+	_completion_sequence_index = 0
 	question_text.visible = false
 	options_container.visible = false
 	intro_text.visible = true
 	continue_label.visible = false
-	_show_text_page(_build_completion_report())
+	_show_text_page(_get_completion_sequence_text(_completion_sequence_index))
+
+
+func _advance_completion_sequence() -> void:
+	if _completion_sequence_index == 0:
+		_show_completion_player_dialogue()
+		return
+
+	_completion_sequence_index += 1
+	if _completion_sequence_index == 2:
+		_show_text_page(_get_completion_sequence_text(_completion_sequence_index))
+	else:
+		_show_final_day_completed()
+
+
+func _get_completion_sequence_text(index: int) -> String:
+	match index:
+		0:
+			return "IA: Sección concluida, valorando resultados, comprendiendo la base humana...\nEntrando en modo reposo..."
+		_:
+			return _build_completion_report()
+
+
+func _show_intro_player_dialogue() -> void:
+	_waiting_for_intro_dialogue = true
+	continue_label.visible = false
+	player_dialogue.start_dialogue([
+		{
+			"speaker": "",
+			"text": "Ok comencemos con esto."
+		}
+	])
+
+
+func _show_completion_player_dialogue() -> void:
+	_showing_completion_report = false
+	_waiting_for_completion_dialogue = true
+	intro_text.visible = false
+	continue_label.visible = false
+	player_dialogue.start_dialogue([
+		{
+			"speaker": "",
+			"text": "Estos cuestionarios realmente son extraños."
+		},
+		{
+			"speaker": "",
+			"text": "Me pregunto bajo qué criterios son puestos."
+		},
+		{
+			"speaker": "",
+			"text": "Pero bueno, un día más contribuyendo al avance tecnológico."
+		}
+	])
+
+
+func _on_player_dialogue_finished() -> void:
+	if _waiting_for_intro_dialogue:
+		_waiting_for_intro_dialogue = false
+		_start_training_session()
+		return
+
+	if _waiting_for_completion_dialogue:
+		_waiting_for_completion_dialogue = false
+		_showing_completion_report = true
+		_completion_sequence_index = 2
+		intro_text.visible = true
+		_show_text_page(_get_completion_sequence_text(_completion_sequence_index))
 
 
 func _build_completion_report() -> String:
-	return "COGNIS SYSTEMS\nPROGRAMA DE ENTRENAMIENTO SISTEMATICO DE INTELIGENCIA ARTIFICIAL\n\nINFORME DE RENDIMIENTO\n\nUnidad: [......]\nIdentificador del sujeto: [......]\nIngeniero/a responsable: [......]\nPeriodo de evaluacion: [DIA 01]\n\nRecuerde: \"\"\n\n\n\n[CONTINUAR]"
+	return "[b]COGNIS SYSTEMS[/b]\n[b]PROGRAMA DE ENTRENAMIENTO SISTEMÁTICO DE INTELIGENCIA ARTIFICIAL[/b]\n\n[b]INFORME DE RENDIMIENTO[/b]\n\n[b]Unidad: 0045][/b]\n[b]Identificador del sujeto: B1263][/b]\n[b]Ingeniero/a responsable: [æßðſ€ðſſ][/b]\n[b]Periodo de evaluación: [DÍA 01][/b]\n\n[CONTINUAR]"
 
 
 func _show_final_day_completed() -> void:

@@ -25,26 +25,50 @@ func _ready() -> void:
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
-			"text": "No olvido nada, ¿verdad?"
+			"speaker": "Narrador",
+			"text": "La puerta permanece cerrada, separando el pequeño apartamento del pasillo exterior."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Bajo ella se filtra una franja de luz proveniente del edificio."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Del otro lado apenas se escuchan pasos y el movimiento de los vecinos comenzando el día."
 		},
 		{
 			"speaker": "",
-			"text": "Creo que no."
+			"text": "¿No olvido nada verdad?"
 		},
 		{
 			"speaker": "",
-			"text": "Pero qué emoción haber clasificado..."
+			"text": "Creo que no, pero qué emoción haber clasificado."
 		},
 		{
 			"speaker": "",
 			"text": "Espero que todo salga bien."
+		},
+		{
+			"speaker": "",
+			"text": "O sea, no es como que no deba salir bien."
+		},
+		{
+			"speaker": "",
+			"text": "Al fin estoy en el puesto en que siempre he querido."
+		},
+		{
+			"speaker": "",
+			"text": "Bueno, [b]æßðſ€ðſſ[/b] recuerda: hoy es un nuevo día."
+		},
+		{
+			"speaker": "",
+			"text": "*sale*"
 		}
 	])
 
 
 func _on_dialogue_line_started() -> void:
-	if dialogue_box.current_line != 3:
+	if dialogue_box.current_line != 5:
 		return
 
 	if keys_audio != null and keys_audio.stream != null:

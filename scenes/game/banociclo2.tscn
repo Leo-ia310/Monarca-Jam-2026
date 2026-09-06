@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/banociclo2.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d0k7gtomhvh47" path="res://assets/ui/bathroom_background.png" id="2_background"]
@@ -6,6 +6,8 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="4_dialogue_box"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-filling-sink-with-water-1819.wav" id="5_sink"]
 [ext_resource type="Texture2D" path="res://assets/ui/bathroom_character_fragment.png" id="6_fragment_character"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-fast-heartbeat-493.wav" id="7_glitch"]
+[ext_resource type="Texture2D" path="res://assets/ui/bathroom_character_blink.png" id="8_blink"]
 
 [node name="BanoCiclo2" type="Control" unique_id=221904463]
 layout_mode = 3
@@ -15,6 +17,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
+blink_texture = ExtResource("8_blink")
 
 [node name="Background" type="TextureRect" parent="." unique_id=416797062]
 layout_mode = 1
@@ -65,6 +68,17 @@ texture = ExtResource("6_fragment_character")
 expand_mode = 1
 stretch_mode = 5
 
+[node name="GlitchOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.75, 0, 1, 0.2)
+
 [node name="DialogueBox" parent="." unique_id=316168711 instance=ExtResource("4_dialogue_box")]
 visible = true
 layout_mode = 1
@@ -73,7 +87,7 @@ anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 75.0
 offset_top = 534.0
-offset_right = 720.0
+offset_right = 940.0
 offset_bottom = 675.0
 grow_horizontal = 1
 grow_vertical = 1
@@ -81,7 +95,7 @@ characters_per_second = 24.0
 use_manual_box_rect = true
 content_margin_left = 42.0
 content_margin_top = 38.0
-content_margin_right = 38.0
+content_margin_right = 28.0
 content_margin_bottom = 24.0
 
 [node name="FadeRect" type="ColorRect" parent="." unique_id=447786915]
@@ -97,4 +111,9 @@ color = Color(0, 0, 0, 1)
 [node name="SinkAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_sink")
 volume_db = -18.0
+bus = &"SFX"
+
+[node name="GlitchAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_glitch")
+volume_db = -4.0
 bus = &"SFX"

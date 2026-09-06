@@ -44,6 +44,34 @@ func _ready() -> void:
 		{
 			"speaker": "",
 			"text": "Eres lo más lindo de mis mañanas."
+		},
+		{
+			"speaker": "",
+			"text": "Bueno, este lugar no es tan malo."
+		},
+		{
+			"speaker": "",
+			"text": "Esperaba más por parte de [b]COGNIS SYSTEMS[/b]."
+		},
+		{
+			"speaker": "",
+			"text": "Pero bueno, supongo que los fondos se desvían a otro lado. Quién sabe."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "La ventana ofrece una vista de la ciudad que comienza a despertar."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Las cortinas dejan pasar algunos rayos de sol."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Los sonidos del exterior se filtran suavemente al interior."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Por un momento, todo parece seguir su rutina habitual."
 		}
 	])
 

@@ -55,13 +55,13 @@ func _process(delta: float) -> void:
 
 	var previous_character := current_character
 	_character_progress += characters_per_second * delta
-	current_character = mini(int(_character_progress), _current_text.length())
+	current_character = mini(int(_character_progress), dialogue_text.get_total_character_count())
 
 	if current_character != previous_character:
 		dialogue_text.visible_characters = current_character
 		_play_typing_audio(previous_character, current_character)
 
-	if current_character >= _current_text.length():
+	if current_character >= dialogue_text.get_total_character_count():
 		_finish_current_line()
 
 
@@ -127,7 +127,7 @@ func _start_next_line() -> void:
 	_line_finished_emitted = false
 	is_typing = true
 
-	speaker_label.text = speaker
+	speaker_label.text = "" if speaker.is_empty() else (speaker if speaker.ends_with(":") else "%s:" % speaker)
 	speaker_label.visible = not speaker.is_empty()
 	dialogue_text.text = _current_text
 	dialogue_text.visible_characters = 0
@@ -136,7 +136,7 @@ func _start_next_line() -> void:
 
 
 func _reveal_current_line() -> void:
-	current_character = _current_text.length()
+	current_character = dialogue_text.get_total_character_count()
 	_character_progress = float(current_character)
 	dialogue_text.visible_characters = current_character
 	_finish_current_line()

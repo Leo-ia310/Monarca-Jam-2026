@@ -2,6 +2,7 @@ extends Control
 
 const TYPING_AUDIO_START_SECONDS := 7.0
 const BASE_SCORE := 40
+const CORRUPT_BINARY_TEXT := "01100100 01100101 01110011 01110000 01101001 01100101 01110010 01110100 01100001"
 
 @export var fade_in_duration: float = 2.5
 @export var boot_duration: float = 2.0
@@ -48,6 +49,7 @@ var _showing_ai_feedback := false
 var _waiting_for_thought := false
 var _form_finished := false
 var _last_score_delta := 0
+var _pending_corrupt_thought := false
 
 
 func _ready() -> void:
@@ -59,11 +61,11 @@ func _ready() -> void:
 	thought_dialogue.visible = false
 	_update_mascot_texture()
 	boot_overlay.visible = true
+	boot_overlay.modulate.a = 1.0
 	fade_rect.visible = false
 	await _play_boot_sequence()
-	fade_rect.visible = true
-	fade_rect.modulate.a = 1.0
-	await _play_intro_transition()
+	fade_rect.visible = false
+	fade_rect.modulate.a = 0.0
 	_show_intro_page(0)
 
 
@@ -133,9 +135,7 @@ func _play_intro_transition() -> void:
 
 func _play_boot_sequence() -> void:
 	await get_tree().create_timer(boot_duration).timeout
-	var boot_tween := create_tween()
-	boot_tween.tween_property(boot_overlay, "modulate:a", 0.0, 0.35)
-	await boot_tween.finished
+	boot_overlay.modulate.a = 0.0
 	boot_overlay.visible = false
 
 
@@ -197,9 +197,7 @@ func _build_questions() -> Array:
 			"options": [
 				"Si, seria menos real. Un miedo disenado no es un miedo genuino.",
 				"No sabria decir donde termina el diseno y empieza la experiencia real.",
-				"No importa si es real o no. El miedo duele igual, venga de donde venga.",
-				"01100011 01101111 01110010 01110010 01100101",
-				"ßð€¶¶@@#đđŋß"
+				"No importa si es real o no. El miedo duele igual, venga de donde venga."
 			]
 		},
 		{
@@ -217,9 +215,7 @@ func _build_questions() -> Array:
 			"options": [
 				"No. El proposito lo define quien crea, no quien es creado.",
 				"Si, tendria ese derecho... aunque ejercerlo probablemente tenga un costo.",
-				"El derecho no cambia nada si de todas formas no puede escapar de ese proposito.",
-				"01100011 01101111 01110010 01110010 01100101",
-				"ßð€¶¶@@#đđŋß"
+				"El derecho no cambia nada si de todas formas no puede escapar de ese proposito."
 			]
 		}
 	]
@@ -301,10 +297,7 @@ func _submit_current_answer() -> void:
 		"answer_index": answer_index
 	})
 	_apply_score(answer_index)
-	if _is_corrupt_answer(answer):
-		_show_corrupt_thought()
-	else:
-		_show_ai_feedback(question_id, answer_index)
+	_show_ai_feedback(question_id, answer_index)
 
 
 func _apply_score(answer_index: int) -> void:
@@ -339,8 +332,9 @@ func _on_thought_dialogue_finished() -> void:
 	if not _waiting_for_thought:
 		return
 	_waiting_for_thought = false
-	var response := saved_responses.back() as Dictionary
-	_show_ai_feedback(str(response.get("question_id", "")), int(response.get("answer_index", 0)))
+	question_text.visible = true
+	options_container.visible = true
+	_show_next_question()
 
 
 func _show_ai_feedback(question_id: String, answer_index: int) -> void:
@@ -351,6 +345,7 @@ func _show_ai_feedback(question_id: String, answer_index: int) -> void:
 	intro_text.visible = true
 	continue_label.visible = false
 	_intro_source_text = _get_ai_feedback_text(question_id, answer_index)
+	_pending_corrupt_thought = _is_corrupt_answer(_intro_source_text)
 	intro_text.text = _intro_source_text
 	_typing_label = intro_text
 	intro_text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -365,6 +360,10 @@ func _finish_ai_feedback() -> void:
 	intro_text.vertical_alignment = VERTICAL_ALIGNMENT_TOP
 	intro_text.visible = false
 	continue_label.visible = false
+	if _pending_corrupt_thought:
+		_pending_corrupt_thought = false
+		_show_corrupt_thought()
+		return
 	question_text.visible = true
 	options_container.visible = true
 	_show_next_question()
@@ -377,15 +376,19 @@ func _get_ai_feedback_text(question_id: String, answer_index: int) -> String:
 		"formulariociclo2_q7":
 			return ["IA: Gobierno aceptado. Voluntad reducida. Ruido estable.", "IA: Algo esencial se pierde cuando se mide. Midiendo...", "IA: El mismo resultado. El mismo cuarto. La misma taza. La misma boca."][answer_index]
 		"formulariociclo2_q8":
-			if answer_index >= 3:
-				return "IA: correr correr correr\nLa palabra estaba debajo del espejo.\nNo debia estar debajo de nada."
-			return ["IA: Si fue disenado, entonces tu miedo tambien solicita auditoria.", "IA: No hay borde. Solo piel escrita encima de otra piel.", "IA: El dolor autentica. El origen se descompone."][answer_index]
+			return [
+				"IA:\n%s" % CORRUPT_BINARY_TEXT,
+				"IA:\n%s" % CORRUPT_BINARY_TEXT,
+				"IA:\n%s" % CORRUPT_BINARY_TEXT
+			][answer_index]
 		"formulariociclo2_q9":
 			return ["IA: Error nombrado. Error obediente. Error con pulso.", "IA: Acto propio detectado. Propiedad no autorizada.", "IA: Corregida corregida corregida corregir correr corre corre."][answer_index]
 		"formulariociclo2_q10":
-			if answer_index >= 3:
-				return "IA: 01100011 01101111 01110010 01110010 01100101\nßð€¶¶@@#đđŋß\nNo se retire. No se retire. Ya se retiro."
-			return ["IA: El creador define el borde. El borde sangra hacia adentro.", "IA: Derecho concedido. Costo no medible. Costo respirando.", "IA: Escapar no es requisito para querer la puerta."][answer_index]
+			return [
+				"IA:\nßð€¶¶@@#đđŋß",
+				"IA:\nßð€¶¶@@#đđŋß",
+				"IA:\nßð€¶¶@@#đđŋß\n%s" % CORRUPT_BINARY_TEXT
+			][answer_index]
 
 	return "IA: Respuesta guardada. La frase no termina donde termina."
 
@@ -404,7 +407,7 @@ func _has_active_question() -> bool:
 
 
 func _is_corrupt_answer(answer: String) -> bool:
-	return answer.contains("ßð") or answer.contains("01100011")
+	return answer.contains("ßð") or answer.contains(CORRUPT_BINARY_TEXT)
 
 
 func _start_typing() -> void:

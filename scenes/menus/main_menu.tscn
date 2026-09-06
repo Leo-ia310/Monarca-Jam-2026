@@ -1,6 +1,17 @@
 [gd_scene format=3 uid="uid://b2crguyo0kvbk"]
 
 [ext_resource type="Script" uid="uid://dlxmp833pagtj" path="res://scripts/menus/main_menu.gd" id="1_main_menu"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_button"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_confirm"]
+bg_color = Color(0.01, 0.008, 0.025, 0.86)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.56, 0.64, 0.85)
 
 [node name="MainMenu" type="Control" unique_id=593051780]
 layout_mode = 3
@@ -16,71 +27,181 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -3.0
+offset_top = 5.0
+offset_right = -3.0
+offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.02, 0.025, 0.035, 1)
 
-[node name="PageMargin" type="MarginContainer" parent="." unique_id=1885930761]
+[node name="MenuStack" type="VBoxContainer" parent="." unique_id=1553015212]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -97.0
+offset_top = -153.0
+offset_right = 183.0
+offset_bottom = 173.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-theme_override_constants/margin_left = 48
-theme_override_constants/margin_top = 48
-theme_override_constants/margin_right = 48
-theme_override_constants/margin_bottom = 48
-
-[node name="Center" type="CenterContainer" parent="PageMargin" unique_id=1370540211]
-layout_mode = 2
-mouse_filter = 2
-
-[node name="MenuStack" type="VBoxContainer" parent="PageMargin/Center" unique_id=1553015212]
-layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="TitleLabel" type="Label" parent="PageMargin/Center/MenuStack" unique_id=120139057]
-layout_mode = 2
-theme_override_font_sizes/font_size = 44
-text = "MONARCA JAM 2026"
-horizontal_alignment = 1
-
-[node name="SubtitleLabel" type="Label" parent="PageMargin/Center/MenuStack" unique_id=94346919]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Placeholder menu"
-horizontal_alignment = 1
-
-[node name="ButtonSpacer" type="Control" parent="PageMargin/Center/MenuStack" unique_id=1403870757]
-custom_minimum_size = Vector2(1, 20)
+[node name="ButtonSpacer" type="Control" parent="MenuStack" unique_id=1403870757]
+custom_minimum_size = Vector2(1, 86)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PlayButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=543124689]
+[node name="PlayButton" type="Button" parent="MenuStack" unique_id=543124689]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-text = "Jugar"
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "> JUGAR"
 
-[node name="OptionsButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1177508329]
+[node name="OptionsButton" type="Button" parent="MenuStack" unique_id=1177508329]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-text = "Opciones"
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "  OPCIONES"
 
-[node name="CreditsButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1308040421]
+[node name="CreditsButton" type="Button" parent="MenuStack" unique_id=1308040421]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-text = "Créditos"
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "  CRÉDITOS"
 
-[node name="ExitButton" type="Button" parent="PageMargin/Center/MenuStack" unique_id=1202157046]
+[node name="ExitButton" type="Button" parent="MenuStack" unique_id=1202157046]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-text = "Salir"
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "  SALIR"
+
+[node name="TitleLabel" type="Label" parent="." unique_id=120139057]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -258.0
+offset_top = -222.0
+offset_right = 242.0
+offset_bottom = -162.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 44
+text = "Singularidad"
+horizontal_alignment = 1
+
+[node name="SubtitleLabel" type="Label" parent="." unique_id=94346919]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -131.0
+offset_top = -123.0
+offset_right = 109.0
+offset_bottom = -93.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.42, 0.56, 0.64, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 16
+text = "COGNIS SYSTEMS"
+horizontal_alignment = 1
+
+[node name="ExitConfirm" type="Panel" parent="." unique_id=707698113]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -180.0
+offset_top = -86.0
+offset_right = 180.0
+offset_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_confirm")
+
+[node name="ConfirmStack" type="VBoxContainer" parent="ExitConfirm" unique_id=941075354]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = -32.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="ConfirmLabel" type="Label" parent="ExitConfirm/ConfirmStack" unique_id=1916174370]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.9, 1, 1)
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 18
+text = "¿FINALIZAR SESIÓN?"
+horizontal_alignment = 1
+
+[node name="YesButton" type="Button" parent="ExitConfirm/ConfirmStack" unique_id=1655143120]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "  SÍ"
+
+[node name="NoButton" type="Button" parent="ExitConfirm/ConfirmStack" unique_id=674978373]
+custom_minimum_size = Vector2(180, 36)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_font")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxEmpty_button")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_button")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
+text = "> NO"
