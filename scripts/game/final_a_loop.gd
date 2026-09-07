@@ -103,6 +103,14 @@ var _choice_start_position := Vector2.ZERO
 var _dialogue_visual_token := 0
 var _rng := RandomNumberGenerator.new()
 
+
+func _get_routine_steps() -> Array:
+	return ROUTINE_STEPS
+
+
+func _get_office_scene_path() -> String:
+	return OFFICE_SCENE_PATH
+
 @onready var background := $Background as TextureRect
 @onready var foreground := $Foreground as TextureRect
 @onready var glitch_copy_pink := $GlitchCopyPink as TextureRect
@@ -135,7 +143,7 @@ func _ready() -> void:
 	glitch_copy_green.visible = false
 	glitch_overlay.visible = false
 	glitch_overlay.modulate.a = 0.0
-	_apply_visual_step(ROUTINE_STEPS[0])
+	_apply_visual_step(_get_routine_steps()[0])
 	fade_rect.modulate.a = 1.0
 	var tween := create_tween()
 	tween.tween_property(fade_rect, "modulate:a", 0.0, 0.35)
@@ -170,7 +178,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build_routine_dialogue() -> Array:
 	var dialogue := []
-	for step in ROUTINE_STEPS:
+	for step in _get_routine_steps():
 		dialogue.append({
 			"speaker": str(step.get("speaker", "")),
 			"emotion": str(step.get("emotion", "")),
@@ -183,8 +191,9 @@ func _on_dialogue_line_started() -> void:
 	if _state != FlowState.ROUTINE_DIALOGUE:
 		return
 
-	var index := clampi(dialogue_box.current_line, 0, ROUTINE_STEPS.size() - 1)
-	var step := ROUTINE_STEPS[index] as Dictionary
+	var routine_steps := _get_routine_steps()
+	var index := clampi(dialogue_box.current_line, 0, routine_steps.size() - 1)
+	var step := routine_steps[index] as Dictionary
 	_apply_visual_step(step)
 	_start_dialogue_visual_cycle(step)
 	_play_routine_sound(str(step.get("sound", "")))
@@ -277,7 +286,7 @@ func _confirm_yes() -> void:
 	tween.tween_property(choice_panel, "modulate:a", 0.35, 0.08)
 	tween.tween_property(choice_panel, "modulate:a", 1.0, 0.08)
 	await tween.finished
-	get_tree().change_scene_to_file(OFFICE_SCENE_PATH)
+	get_tree().change_scene_to_file(_get_office_scene_path())
 
 
 func _play_no_glitch() -> void:

@@ -1,16 +1,17 @@
-[gd_scene load_steps=9 format=3 uid="uid://u85n0ie8pkxq"]
+[gd_scene format=3 uid="uid://u85n0ie8pkxq"]
 
 [ext_resource type="Script" uid="uid://bspbil0b2dscn" path="res://scripts/game/final_a_office.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://bhqrm2vg7rlyt" path="res://assets/ui/formulario1_background.png" id="2_background"]
 [ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="3_font"]
 [ext_resource type="Texture2D" uid="uid://m3c2e67r022j" path="res://assets/ui/cognis_mascot_neutral.png" id="4_mascot"]
-[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="5_dialogue_box"]
+[ext_resource type="PackedScene" uid="uid://cp33ucdjnrypf" path="res://scenes/ui/dialogue_box.tscn" id="5_dialogue_box"]
+[ext_resource type="Texture2D" path="res://assets/ui/final_b_revelation.png" id="6_final_b_image"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-glitch-static-1457.wav" id="7_glitch_static"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-small-electric-glitch-2595.wav" id="8_glitch_electric"]
+[ext_resource type="Texture2D" path="res://assets/ui/final_c_revelation.png" id="9_final_c_image"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
 bg_color = Color(0.01, 0.008, 0.025, 0.78)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_boot"]
-bg_color = Color(0, 0, 0, 1)
 
 [node name="FinalAOffice" type="Control" unique_id=1625263563]
 layout_mode = 3
@@ -33,7 +34,7 @@ texture = ExtResource("2_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Mascot" type="TextureRect" parent="."]
+[node name="Mascot" type="TextureRect" parent="." unique_id=276305784]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.03
@@ -51,8 +52,9 @@ texture = ExtResource("4_mascot")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="BootOverlay" type="Control" parent="."]
+[node name="BootOverlay" type="Control" parent="." unique_id=97441493]
 layout_mode = 1
+anchors_preset = 0
 offset_left = 468.0
 offset_top = 246.0
 offset_right = 1058.0
@@ -61,7 +63,7 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BootBackground" type="ColorRect" parent="BootOverlay"]
+[node name="BootBackground" type="ColorRect" parent="BootOverlay" unique_id=59394026]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -71,7 +73,7 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
-[node name="BootCenter" type="CenterContainer" parent="BootOverlay"]
+[node name="BootCenter" type="CenterContainer" parent="BootOverlay" unique_id=1697642896]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -80,40 +82,40 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="BootStack" type="VBoxContainer" parent="BootOverlay/BootCenter"]
+[node name="BootStack" type="VBoxContainer" parent="BootOverlay/BootCenter" unique_id=1484551240]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 18
 alignment = 1
 
-[node name="SystemIcon" type="GridContainer" parent="BootOverlay/BootCenter/BootStack"]
+[node name="SystemIcon" type="GridContainer" parent="BootOverlay/BootCenter/BootStack" unique_id=319145860]
 custom_minimum_size = Vector2(74, 74)
 layout_mode = 2
 theme_override_constants/h_separation = 8
 theme_override_constants/v_separation = 8
 columns = 2
 
-[node name="PanelA" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+[node name="PanelA" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon" unique_id=1601521219]
 custom_minimum_size = Vector2(33, 33)
 layout_mode = 2
 color = Color(0.56, 0.78, 1, 1)
 
-[node name="PanelB" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+[node name="PanelB" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon" unique_id=532100615]
 custom_minimum_size = Vector2(33, 33)
 layout_mode = 2
 color = Color(0.56, 0.78, 1, 1)
 
-[node name="PanelC" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+[node name="PanelC" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon" unique_id=799297365]
 custom_minimum_size = Vector2(33, 33)
 layout_mode = 2
 color = Color(0.56, 0.78, 1, 1)
 
-[node name="PanelD" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+[node name="PanelD" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon" unique_id=951205632]
 custom_minimum_size = Vector2(33, 33)
 layout_mode = 2
 color = Color(0.56, 0.78, 1, 1)
 
-[node name="BootLabel" type="Label" parent="BootOverlay/BootCenter/BootStack"]
+[node name="BootLabel" type="Label" parent="BootOverlay/BootCenter/BootStack" unique_id=1714684354]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("3_font")
 theme_override_font_sizes/font_size = 18
@@ -129,7 +131,7 @@ offset_bottom = 532.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
 
-[node name="IntroText" type="RichTextLabel" parent="TerminalPanel"]
+[node name="IntroText" type="RichTextLabel" parent="TerminalPanel" unique_id=742382623]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -146,10 +148,9 @@ theme_override_fonts/bold_font = ExtResource("3_font")
 theme_override_font_sizes/normal_font_size = 16
 theme_override_font_sizes/bold_font_size = 16
 bbcode_enabled = true
-text = ""
 scroll_active = false
 
-[node name="ContinueLabel" type="Label" parent="TerminalPanel"]
+[node name="ContinueLabel" type="Label" parent="TerminalPanel" unique_id=1471577822]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 1.0
@@ -166,7 +167,7 @@ theme_override_font_sizes/font_size = 14
 text = "Presiona Enter para continuar"
 horizontal_alignment = 2
 
-[node name="DialogueBox" parent="." instance=ExtResource("5_dialogue_box")]
+[node name="DialogueBox" parent="." unique_id=1120628935 instance=ExtResource("5_dialogue_box")]
 layout_mode = 1
 anchors_preset = 0
 anchor_right = 0.0
@@ -177,7 +178,6 @@ offset_right = 940.0
 offset_bottom = 675.0
 grow_horizontal = 1
 grow_vertical = 1
-characters_per_second = 24.0
 use_manual_box_rect = true
 content_margin_left = 42.0
 content_margin_top = 38.0
@@ -194,3 +194,125 @@ grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
+[node name="FinalBImage" type="TextureRect" parent="."]
+visible = false
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_final_b_image")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FinalBImagePink" type="TextureRect" parent="."]
+visible = false
+z_index = 6
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_final_b_image")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 0.08, 0.62, 0.35)
+
+[node name="FinalBImageGreen" type="TextureRect" parent="."]
+visible = false
+z_index = 6
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("6_final_b_image")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(0.05, 1, 0.42, 0.3)
+
+[node name="FinalBGlitchOverlay" type="ColorRect" parent="."]
+visible = false
+z_index = 7
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 1, 1)
+
+[node name="FinalBGlitchStaticAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_glitch_static")
+volume_db = 3.0
+
+[node name="FinalBGlitchElectricAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_glitch_electric")
+volume_db = 3.0
+
+[node name="FinalCImage" type="TextureRect" parent="."]
+visible = false
+z_index = 5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_final_c_image")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="FinalCImagePink" type="TextureRect" parent="."]
+visible = false
+z_index = 6
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_final_c_image")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(1, 0.08, 0.62, 0.35)
+
+[node name="FinalCImageGreen" type="TextureRect" parent="."]
+visible = false
+z_index = 6
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("9_final_c_image")
+expand_mode = 1
+stretch_mode = 5
+modulate = Color(0.05, 1, 0.42, 0.3)
+
+[node name="CompletionText" type="Label" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 32
+text = "0/3 finales jugados"
+horizontal_alignment = 1
+vertical_alignment = 1

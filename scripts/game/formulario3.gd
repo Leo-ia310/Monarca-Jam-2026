@@ -5,6 +5,8 @@ const BASE_SCORE := 40
 const CORRUPT_BINARY_TEXT := "01100100 01100101 01110011 01110000 01101001 01100101 01110010 01110100 01100001"
 const NEXT_DAY_SCENE_PATH := "res://scenes/game/game_placeholder.tscn"
 const FINAL_A_SCENE_PATH := "res://scenes/game/final_a_loop.tscn"
+const FINAL_B_SCENE_PATH := "res://scenes/game/final_b_loop.tscn"
+const FINAL_C_SCENE_PATH := "res://scenes/game/final_c_loop.tscn"
 
 @export var fade_in_duration: float = 2.5
 @export var boot_duration: float = 2.0
@@ -489,8 +491,15 @@ func _show_final_day_completed() -> void:
 func _go_to_next_day() -> void:
 	_changing_to_next_day = true
 	await get_tree().create_timer(day_completed_hold_duration).timeout
-	if EndingState.is_final_a():
+	var dominant_route := EndingState.get_dominant_route()
+	if dominant_route == "A":
 		get_tree().change_scene_to_file(FINAL_A_SCENE_PATH)
+		return
+	if dominant_route == "B":
+		get_tree().change_scene_to_file(FINAL_B_SCENE_PATH)
+		return
+	if dominant_route == "C":
+		get_tree().change_scene_to_file(FINAL_C_SCENE_PATH)
 		return
 	get_tree().change_scene_to_file(NEXT_DAY_SCENE_PATH)
 
