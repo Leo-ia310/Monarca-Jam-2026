@@ -28,7 +28,11 @@ func _ensure_player() -> void:
 
 func play_menu_music() -> void:
 	_ensure_player()
-
+	print("=== play_menu_music ===")
+	print("Stream: ", _player.stream)
+	print("Bus: ", _player.bus, " -> index: ", AudioServer.get_bus_index(_player.bus))
+	print("Bus volume (db): ", AudioServer.get_bus_volume_db(AudioServer.get_bus_index(_player.bus)))
+	print("Bus muted: ", AudioServer.is_bus_mute(AudioServer.get_bus_index(_player.bus)))
 	if _player.stream == null:
 		var loaded := load(MENU_MUSIC_PATH)
 		if loaded != null:
@@ -36,7 +40,6 @@ func play_menu_music() -> void:
 	if _player.stream == null:
 		push_error("No se pudo cargar la musica del menu: %s" % MENU_MUSIC_PATH)
 		return
-
 	_enable_music_loop()
 	_player.bus = _get_music_bus_name()
 	_player.volume_db = 0.0
@@ -55,18 +58,22 @@ func _play_menu_music_deferred(play_token: int) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	if play_token != _play_token:
+		print("Token obsoleto, cancelando play")
 		return
 	if _player == null:
 		return
 	if _player.stream == null:
 		push_error("No se pudo cargar la musica del menu: %s" % MENU_MUSIC_PATH)
 		return
-
-	_player.bus = _get_music_bus_name()
+	_player.bus = &"Master"
 	_player.volume_db = 0.0
 	_player.stream_paused = false
 	if not _player.playing:
 		_player.play(0.0)
+	print("Playing ahora: ", _player.playing, " | Master vol: ", AudioServer.get_bus_volume_db(0))
+	print("Duración del stream: ", _player.stream.get_length())
+	print("Mix rate: ", (_player.stream as AudioStreamWAV).mix_rate)
+	print("Formato: ", (_player.stream as AudioStreamWAV).format)
 
 
 func _get_music_bus_name() -> StringName:
@@ -80,6 +87,8 @@ func _get_music_bus_name() -> StringName:
 func _enable_music_loop() -> void:
 	if _player == null or _player.stream == null:
 		return
-
 	if _player.stream is AudioStreamWAV:
-		(_player.stream as AudioStreamWAV).loop_mode = AudioStreamWAV.LOOP_FORWARD
+		var wav := _player.stream as AudioStreamWAV
+		wav.loop_mode = AudioStreamWAV.LOOP_FORWARD
+		wav.loop_begin = 0
+		wav.loop_end = wav.data.size() 

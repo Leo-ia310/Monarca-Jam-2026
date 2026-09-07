@@ -218,7 +218,7 @@ func _should_play_typing_audio(character: String) -> bool:
 	return not character in [" ", "\n", "\t", ".", ",", ";", ":", "!", "?", "¿", "¡", "\"", "'", "(", ")", "[", "]"]
 
 
-@export var boot_duration: float = 1.8
+
 @export var fade_in_duration: float = 0.5
 
 # Dialogo separado en partes para que quepa y se lea bien
@@ -237,28 +237,14 @@ var _dialogue_lines := [
 	}
 ]
 
-@onready var mascot := $Mascot as TextureRect
-@onready var boot_overlay := $BootOverlay as Control
-@onready var terminal_panel := $TerminalPanel as Panel
+
 @onready var intro_text := $TerminalPanel/IntroText as RichTextLabel
-@onready var continue_label := $TerminalPanel/ContinueLabel as Label
-@onready var fade_rect := $FadeRect as ColorRect
+
 @onready var dialogue_box := $DialogueBox
 
 
-func _ready() -> void:
-	intro_text.visible_characters = 0
-	intro_text.text = ""
-	continue_label.visible = false
-	dialogue_box.visible = false
-	fade_rect.visible = true
-	fade_rect.modulate.a = 1.0
-	boot_overlay.visible = true
-	boot_overlay.modulate.a = 1.0
-	_play_boot_sequence()
 
-
-func _play_boot_sequence() -> void:
+func _play_boot_sequence1() -> void:
 	await get_tree().create_timer(boot_duration).timeout
 	if not is_inside_tree():
 		return
