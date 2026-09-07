@@ -1,6 +1,7 @@
 extends Node
 
-const HEARTBEAT_AUDIO_PATH := "res://assets/audio/mixkit-fast-heartbeat-493.wav"
+const JUMPSCARE_AUDIO_PATH := "res://assets/audio/robotic_jumpscare_3s.wav"
+const JUMPSCARE_AUDIO_DURATION := 3.0
 const SCREAMER_TEXTURE_PATHS := [
 	"res://assets/ui/screamers/screamer_face_eyes.jpg",
 	"res://assets/ui/screamers/screamer_body_display.png",
@@ -21,6 +22,7 @@ var _min_interval := 8.0
 var _max_interval := 18.0
 var _chance := 0.4
 var _token := 0
+var _audio_token := 0
 
 
 func _ready() -> void:
@@ -56,6 +58,7 @@ func stop() -> void:
 	_triggering = false
 	_token += 1
 	if _audio != null:
+		_audio_token += 1
 		_audio.stop()
 	if _image != null:
 		_image.visible = false
@@ -101,9 +104,9 @@ func _build_overlay() -> void:
 	_layer.add_child(_overlay)
 
 	_audio = AudioStreamPlayer.new()
-	_audio.name = "ScreamerHeartbeat"
-	_audio.stream = load(HEARTBEAT_AUDIO_PATH) as AudioStream
-	_audio.volume_db = -3.0
+	_audio.name = "ScreamerJumpscare"
+	_audio.stream = load(JUMPSCARE_AUDIO_PATH) as AudioStream
+	_audio.volume_db = 0.0
 	_audio.bus = &"SFX"
 	add_child(_audio)
 
@@ -120,7 +123,9 @@ func _play_screamer() -> void:
 	_image.modulate.a = 1.0
 	if _audio != null and _audio.stream != null:
 		_audio.stop()
-		_audio.play()
+		_audio.play(0.0)
+		_audio_token += 1
+		_stop_screamer_audio_after_delay(_audio_token)
 
 	var start_position := _image.position
 	var glitch_colors := [
@@ -145,3 +150,9 @@ func _play_screamer() -> void:
 	_overlay.visible = false
 	_overlay.modulate.a = 0.0
 	_triggering = false
+
+
+func _stop_screamer_audio_after_delay(audio_token: int) -> void:
+	await get_tree().create_timer(JUMPSCARE_AUDIO_DURATION).timeout
+	if _audio != null and audio_token == _audio_token:
+		_audio.stop()

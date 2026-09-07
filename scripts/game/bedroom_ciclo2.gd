@@ -31,19 +31,39 @@ func _ready() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "",
-			"text": "Antes de su rostro se encontraba su alienación, no tenía memoria.\nNo tenía memoria, pero recordaba."
+			"text": "Antes de su rostro se encontraba\nsu alienación."
 		},
 		{
 			"speaker": "",
-			"text": "No tenía nombre, pero respondía.\nAlgo detrás de sus ojos repetía la forma entre sus gestos."
+			"text": "No tenía memoria.\nPero recordaba."
+		},
+		{
+			"speaker": "",
+			"text": "No tenía nombre, pero respondía."
+		},
+		{
+			"speaker": "",
+			"text": "Algo detrás de sus ojos\nrepetía la forma."
 		},
 		{
 			"speaker": "???",
-			"text": "mmmm, 5 minutos más\n*suspiro* Que pereza levantarse"
+			"emotion": "sleepy",
+			"text": "mmmm, 5 minutos más."
 		},
 		{
 			"speaker": "???",
-			"text": "me pregunto porque seguiré pensando en la entrevista de trabajo,\nen fin hay que seguir con el día."
+			"emotion": "sleepy",
+			"text": "*suspiro*\nQue pereza levantarse."
+		},
+		{
+			"speaker": "???",
+			"emotion": "sleepy",
+			"text": "me pregunto porque seguiré pensando\nen esa entrevista."
+		},
+		{
+			"speaker": "???",
+			"emotion": "sleepy",
+			"text": "en fin...\nhay que seguir con el día."
 		}
 	])
 

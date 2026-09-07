@@ -36,39 +36,53 @@ func _ready() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "???",
-			"text": "No entiendo, ¿qué me sucede?\nEsta mañana ha sido extraña."
+			"emotion": "scared",
+			"text": "No entiendo...\n¿Qué me sucede?"
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
+			"text": "Esta mañana ha sido extraña."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
 			"text": "Siento miedo, angustia, terror."
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
 			"text": "Solo necesito una taza de..."
 		},
 		{
 			"speaker": "???",
+			"emotion": "sad",
 			"text": "De cafe."
 		},
 		{
 			"speaker": "???",
+			"emotion": "sad",
 			"text": "*toma un sorbo*"
 		},
 		{
 			"speaker": "???",
+			"emotion": "sad",
 			"text": "Ahg... detesto el cafe."
 		},
 		{
 			"speaker": "???",
-			"text": "No se por que pense que iba a querer esto."
+			"emotion": "sad",
+			"text": "No se por que pense\nque iba a querer esto."
 		},
 		{
 			"speaker": "???",
+			"emotion": "sad",
 			"text": "Mejor un te."
 		},
 		{
 			"speaker": "???",
-			"text": "Algo mas suave... cualquier cosa menos cafe."
+			"emotion": "sad",
+			"text": "Algo mas suave...\ncualquier cosa menos cafe."
 		}
 	])
 

@@ -82,14 +82,26 @@ color = Color(1, 0, 1, 1)
 
 [node name="DialogueBox" parent="." instance=ExtResource("2")]
 layout_mode = 1
-base_box_size = Vector2(760, 250)
-bottom_margin = 24.0
-max_width_ratio = 0.72
-max_height_ratio = 0.32
-content_margin_left = 58.0
-content_margin_top = 58.0
-content_margin_right = 54.0
-content_margin_bottom = 42.0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 75.0
+offset_top = 534.0
+offset_right = 940.0
+offset_bottom = 675.0
+grow_horizontal = 1
+grow_vertical = 1
+use_manual_box_rect = true
+content_margin_left = 42.0
+content_margin_top = 26.0
+content_margin_right = 28.0
+content_margin_bottom = 16.0
+
+[node name="SpeakerLabel" parent="DialogueBox/ContentMargin/DialogueContent" index="0"]
+theme_override_font_sizes/font_size = 18
+
+[node name="DialogueText" parent="DialogueBox/ContentMargin/DialogueContent" index="1"]
+theme_override_font_sizes/normal_font_size = 19
 
 [node name="ChoicePanel" type="Panel" parent="."]
 visible = false

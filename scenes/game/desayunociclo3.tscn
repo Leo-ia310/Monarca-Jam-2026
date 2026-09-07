@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/desayunociclo3.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/ui/desayuno_ciclo3_background.png" id="2_background"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="3_dialogue_box"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-a-couple-of-glasses-clink-154.wav" id="4_cup"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-quick-sip-from-a-drink-145.wav" id="5_sip"]
 
 [node name="DesayunoCiclo3" type="Control"]
 layout_mode = 3
@@ -61,3 +63,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
+
+[node name="CupAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_cup")
+bus = &"SFX"
+
+[node name="SipAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_sip")
+bus = &"SFX"

@@ -3,12 +3,15 @@ extends Node
 const ROUTE_A := "A"
 const ROUTE_B := "B"
 const ROUTE_C := "C"
+const TOTAL_ENDINGS := 3
 
 var answer_counts := {
 	ROUTE_A: 0,
 	ROUTE_B: 0,
 	ROUTE_C: 0
 }
+
+var endings_completed: Array[String] = []
 
 
 func reset() -> void:
@@ -40,3 +43,13 @@ func get_dominant_route() -> String:
 
 func is_final_a() -> bool:
 	return int(answer_counts[ROUTE_A]) > int(answer_counts[ROUTE_B]) and int(answer_counts[ROUTE_A]) > int(answer_counts[ROUTE_C])
+
+
+func mark_ending_completed(ending_id: String) -> void:
+	if not endings_completed.has(ending_id):
+		endings_completed.append(ending_id)
+
+
+func get_endings_count() -> int:
+	return endings_completed.size()
+

@@ -1,6 +1,6 @@
 extends Control
 
-const NEXT_SCENE_PATH := "res://scenes/game/salidaciclo3.tscn"
+const NEXT_SCENE_PATH := "res://scenes/game/desayunociclo3.tscn"
 
 @export var fade_in_duration: float = 2.5
 @export var transition_zoom_scale: float = 1.05
@@ -14,16 +14,20 @@ const NEXT_SCENE_PATH := "res://scenes/game/salidaciclo3.tscn"
 @onready var sink_audio := $SinkAudio as AudioStreamPlayer
 @onready var glitch_audio := $GlitchAudio as AudioStreamPlayer
 @onready var glitch_overlay := $GlitchOverlay as ColorRect
+@onready var dialogue_box := $DialogueBox
 
 var _rng := RandomNumberGenerator.new()
 var _background_start_position := Vector2.ZERO
 var _character_start_position := Vector2.ZERO
 var _fragment_start_position := Vector2.ZERO
+var _transition_started := false
 
 
 func _ready() -> void:
 	ScreamerManager.start_profile("cycle3_normal")
 	_rng.randomize()
+	dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
+	dialogue_box.visible = false
 	fragment_character.visible = false
 	glitch_overlay.visible = false
 	glitch_overlay.modulate.a = 0.0
@@ -42,13 +46,46 @@ func _ready() -> void:
 	await get_tree().create_timer(transform_delay).timeout
 	await _play_transformation_glitch()
 	await get_tree().create_timer(hold_after_transform_duration).timeout
-	get_tree().change_scene_to_file(NEXT_SCENE_PATH)
+	dialogue_box.start_dialogue([
+		{
+			"speaker": "Narrador",
+			"text": "Miraba hacia el abismo, no era dueño de su cuerpo."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Como un ente sin alma."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
+			"text": "El agente imito al sujeto; segunda carne."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
+			"text": "Sus ojos recuerdan lo que nunca vio."
+		},
+		{
+			"speaker": "???",
+			"emotion": "sad",
+			"text": "Quien investiga y combate la oscuridad termina siendo contaminado por ella."
+		}
+	])
 
 
 func _exit_tree() -> void:
 	ScreamerManager.stop()
 	if sink_audio != null:
 		sink_audio.stop()
+
+
+func _on_dialogue_finished() -> void:
+	if _transition_started:
+		return
+
+	_transition_started = true
+	dialogue_box.visible = false
+	get_tree().change_scene_to_file(NEXT_SCENE_PATH)
 
 
 func _play_intro_transition() -> void:

@@ -1,11 +1,12 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://cp33ucdjnrypf"]
 
-[ext_resource type="Script" path="res://scripts/ui/dialogue_box.gd" id="1_dialogue_box"]
+[ext_resource type="Script" uid="uid://b6nsrwjbpeabd" path="res://scripts/ui/dialogue_box.gd" id="1_dialogue_box"]
 [ext_resource type="Theme" path="res://themes/dialogue_theme.tres" id="2_dialogue_theme"]
-[ext_resource type="Texture2D" path="res://assets/ui/1788579579082.png" id="3_dialogue_texture"]
-[ext_resource type="AudioStream" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="4_typing_audio"]
+[ext_resource type="Texture2D" uid="uid://ddn2chexut2tf" path="res://assets/ui/1788579579082.png" id="3_dialogue_texture"]
+[ext_resource type="AudioStream" uid="uid://dd4sn6x3si7um" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="4_typing_audio"]
+[ext_resource type="Texture2D" uid="uid://c14q5p8djac0f" path="res://assets/ui/dialogue_portraits/player_happy.png" id="5_player_happy"]
 
-[node name="DialogueBox" type="Control"]
+[node name="DialogueBox" type="Control" unique_id=973251621]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -13,11 +14,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 0
 theme = ExtResource("2_dialogue_theme")
 script = ExtResource("1_dialogue_box")
 
-[node name="DialogueTexture" type="TextureRect" parent="."]
+[node name="DialogueTexture" type="TextureRect" parent="." unique_id=1309453211]
 layout_mode = 0
 offset_left = 140.0
 offset_top = 332.0
@@ -26,9 +26,21 @@ offset_bottom = 700.0
 mouse_filter = 2
 texture = ExtResource("3_dialogue_texture")
 expand_mode = 1
-stretch_mode = 0
 
-[node name="ContentMargin" type="MarginContainer" parent="."]
+[node name="SpeakerPortrait" type="TextureRect" parent="." unique_id=230625359]
+visible = false
+layout_mode = 0
+offset_left = 174.0
+offset_top = 76.0
+offset_right = 364.0
+offset_bottom = 346.0
+mouse_filter = 2
+texture = ExtResource("5_player_happy")
+expand_mode = 1
+stretch_mode = 5
+flip_h = true
+
+[node name="ContentMargin" type="MarginContainer" parent="." unique_id=1849860569]
 layout_mode = 0
 offset_left = 140.0
 offset_top = 332.0
@@ -40,41 +52,37 @@ theme_override_constants/margin_top = 86
 theme_override_constants/margin_right = 70
 theme_override_constants/margin_bottom = 58
 
-[node name="DialogueContent" type="VBoxContainer" parent="ContentMargin"]
+[node name="DialogueContent" type="VBoxContainer" parent="ContentMargin" unique_id=1676488729]
 layout_mode = 2
 mouse_filter = 2
 theme_override_constants/separation = 8
 
-[node name="SpeakerLabel" type="Label" parent="ContentMargin/DialogueContent"]
+[node name="SpeakerLabel" type="Label" parent="ContentMargin/DialogueContent" unique_id=395681121]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 theme_override_font_sizes/font_size = 20
 text = "MIRROR"
 
-[node name="DialogueText" type="RichTextLabel" parent="ContentMargin/DialogueContent"]
+[node name="DialogueText" type="RichTextLabel" parent="ContentMargin/DialogueContent" unique_id=1251043417]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 size_flags_vertical = 3
+mouse_filter = 2
 bbcode_enabled = true
 text = "No deberías haber despertado."
-fit_content = false
 scroll_active = false
-autowrap_mode = 3
 
-[node name="ContinueRow" type="HBoxContainer" parent="ContentMargin/DialogueContent"]
+[node name="ContinueRow" type="HBoxContainer" parent="ContentMargin/DialogueContent" unique_id=1397916157]
 layout_mode = 2
 mouse_filter = 2
 alignment = 2
 
-[node name="ContinueIndicator" type="Label" parent="ContentMargin/DialogueContent/ContinueRow"]
+[node name="ContinueIndicator" type="Label" parent="ContentMargin/DialogueContent/ContinueRow" unique_id=708843522]
 unique_name_in_owner = true
 layout_mode = 2
-mouse_filter = 2
 text = "..."
 horizontal_alignment = 2
 
-[node name="TypingAudio" type="AudioStreamPlayer" parent="."]
+[node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=1157077750]
 stream = ExtResource("4_typing_audio")
 bus = &"SFX"

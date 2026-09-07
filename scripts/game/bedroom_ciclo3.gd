@@ -30,16 +30,36 @@ func _ready() -> void:
 	await _play_alarm_intro()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "???",
-			"text": "mmm, *busca algo al lado de ella*"
+			"speaker": "Narrador",
+			"text": "Lentamente abre sus ojos, mientras reposa debilmente sobre su cama."
 		},
 		{
-			"speaker": "???",
-			"text": "No, no esta, oh que?"
+			"speaker": "Narrador",
+			"text": "Por alguna razon toca el lado izquierdo de la cama, como si buscara algo suave y pequeño."
 		},
 		{
-			"speaker": "???",
-			"text": "*bosteza* aun tengo mucho sueño"
+			"speaker": "Narrador",
+			"text": "Esta vez busca a una mascota que no tiene."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "La habitacion fue recuperando poco a poco sus formas conocidas."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "La luz escasa, los muebles, la pared a la izquierda de la cama."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Sus ojos pasaron sobre ella varias veces antes de detenerse."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Solo entonces advirtio aquella silueta en la esquina de su puerta."
+		},
+		{
+			"speaker": "Narrador",
+			"text": "Mientras esperaba que el cuerpo volviera a obedecer, siguio mirando la pared."
 		}
 	])
 

@@ -1,6 +1,6 @@
 extends Control
 
-const NEXT_SCENE_PATH := "res://scenes/game/desayunociclo3.tscn"
+const NEXT_SCENE_PATH := "res://scenes/game/formulario3.tscn"
 
 @export var fade_in_duration: float = 2.5
 @export var open_delay: float = 0.7

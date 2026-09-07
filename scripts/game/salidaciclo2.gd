@@ -41,38 +41,68 @@ func _ready() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "",
-			"text": "Una vez lista, y sin entender completamente la situación en la que se encuentra,\nsale de la casa."
+			"text": "Una vez lista,\ny sin entender completamente..."
 		},
 		{
 			"speaker": "",
-			"text": "Y decide ignorar los sucesos ocurridos en la mañana."
+			"text": "la situación en la que se encuentra..."
+		},
+		{
+			"speaker": "",
+			"text": "sale de la casa."
+		},
+		{
+			"speaker": "",
+			"text": "Y decide ignorar\nlos sucesos de la mañana."
 		},
 		{
 			"speaker": "???",
-			"text": "*suspira* Espero que este pueda ser un buen día en el trabajo,\nnecesito un respiro que me permita escapar de esta locura."
+			"emotion": "sad",
+			"text": "*suspira*"
 		},
 		{
 			"speaker": "???",
+			"emotion": "sad",
+			"text": "Espero que este pueda ser\nun buen día en el trabajo."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
+			"text": "necesito un respiro."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
+			"text": "Algo que me permita\nescapar de esta locura."
+		},
+		{
+			"speaker": "???",
+			"emotion": "scared",
 			"text": "No se me olvida nada, ¿verdad?"
 		},
 		{
 			"speaker": "???",
+			"emotion": "happy",
 			"text": "Que tengas un buen dia..."
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
 			"text": "eh..."
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
 			"text": "¿Que fue eso?"
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
 			"text": "Mmm... he..."
 		},
 		{
 			"speaker": "???",
+			"emotion": "scared",
 			"text": "Creo que seria mejor irme ya."
 		}
 	])
