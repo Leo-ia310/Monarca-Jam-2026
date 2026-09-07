@@ -41,40 +41,53 @@ func _ready() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "",
+			"text": "Una vez lista, y sin entender completamente la situación en la que se encuentra,\nsale de la casa."
+		},
+		{
+			"speaker": "",
+			"text": "Y decide ignorar los sucesos ocurridos en la mañana."
+		},
+		{
+			"speaker": "???",
+			"text": "*suspira* Espero que este pueda ser un buen día en el trabajo,\nnecesito un respiro que me permita escapar de esta locura."
+		},
+		{
+			"speaker": "???",
 			"text": "No se me olvida nada, ¿verdad?"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Que tengas un buen dia..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "eh..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "¿Que fue eso?"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Mmm... he..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Creo que seria mejor irme ya."
 		}
 	])
 
 
 func _on_dialogue_line_started() -> void:
-	if dialogue_box.current_line == 0:
+	if dialogue_box.current_line == 3:
 		if keys_audio != null and keys_audio.stream != null:
 			keys_audio.play()
 		if not _key_background_started:
 			_key_background_started = true
 			_swap_to_key_background()
-	elif dialogue_box.current_line == 1:
-		_play_glitch()
+			_play_glitch(false, 8)
+	elif dialogue_box.current_line == 4:
+		_play_glitch(true, 12)
 
 
 func _on_dialogue_finished() -> void:
@@ -99,27 +112,27 @@ func _swap_to_key_background() -> void:
 	background.texture = key_background_texture
 
 
-func _play_glitch() -> void:
+func _play_glitch(show_eyes: bool = true, shake_count: int = 12) -> void:
 	if glitch_static_audio != null and glitch_static_audio.stream != null:
 		glitch_static_audio.stop()
 		glitch_static_audio.play()
 
 	glitch_overlay.visible = true
-	glitch_eyes.visible = true
+	glitch_eyes.visible = show_eyes
 	var glitch_colors := [
 		Color(0.85, 0.0, 1.0, 0.22),
 		Color(1.0, 0.08, 0.72, 0.22),
 		Color(0.1, 1.0, 0.35, 0.18)
 	]
 
-	for shake_index in range(12):
+	for shake_index in range(shake_count):
 		var shake_offset := Vector2(_rng.randf_range(-8.0, 8.0), _rng.randf_range(-5.0, 5.0))
 		background.position = _background_start_position + shake_offset * 0.35
 		dialogue_box.position = _dialogue_start_position + shake_offset
 		glitch_eyes.position = _glitch_eyes_start_position - shake_offset * 0.45
-		glitch_eyes.modulate.a = _rng.randf_range(0.62, 1.0)
+		glitch_eyes.modulate.a = _rng.randf_range(0.62, 1.0) if show_eyes else 0.0
 		glitch_overlay.color = glitch_colors[_rng.randi_range(0, glitch_colors.size() - 1)]
-		glitch_overlay.modulate.a = _rng.randf_range(0.45, 0.85)
+		glitch_overlay.modulate.a = _rng.randf_range(0.32, 0.72)
 		await get_tree().create_timer(0.035).timeout
 
 	background.position = _background_start_position

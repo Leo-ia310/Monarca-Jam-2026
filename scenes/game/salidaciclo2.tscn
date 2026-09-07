@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="2_dialogue_box"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-keys-moving-1558.wav" id="3_keys"]
 [ext_resource type="Texture2D" path="res://assets/ui/exit_background.png" id="4_background"]
-[ext_resource type="Texture2D" path="res://assets/ui/exit_background_key.png" id="5_key_background"]
+[ext_resource type="Texture2D" path="res://assets/ui/exit_ciclo2_door_open.png" id="5_key_background"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-fast-heartbeat-493.wav" id="6_glitch_static"]
 [ext_resource type="Texture2D" path="res://assets/ui/salida_ciclo2_glitch_eyes.png" id="7_glitch_eyes"]
 

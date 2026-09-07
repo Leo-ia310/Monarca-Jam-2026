@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://d1odhvesudb1r"]
+[gd_scene load_steps=7 format=3 uid="uid://d1odhvesudb1r"]
 
 [ext_resource type="Script" path="res://scripts/game/bedroom_ciclo2.gd" id="1_script"]
 [ext_resource type="Texture2D" path="res://assets/ui/bedroom_ciclo2_background.png" id="2_background"]

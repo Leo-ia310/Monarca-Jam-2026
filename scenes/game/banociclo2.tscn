@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://scripts/game/banociclo2.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d0k7gtomhvh47" path="res://assets/ui/bathroom_background.png" id="2_background"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" path="res://assets/ui/bathroom_character_fragment.png" id="6_fragment_character"]
 [ext_resource type="AudioStream" path="res://assets/audio/mixkit-fast-heartbeat-493.wav" id="7_glitch"]
 [ext_resource type="Texture2D" path="res://assets/ui/bathroom_character_blink.png" id="8_blink"]
+[ext_resource type="Texture2D" path="res://assets/ui/bathroom_character_fragment_blink.png" id="9_fragment_blink"]
 
 [node name="BanoCiclo2" type="Control" unique_id=221904463]
 layout_mode = 3
@@ -18,6 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_script")
 blink_texture = ExtResource("8_blink")
+fragment_blink_texture = ExtResource("9_fragment_blink")
 
 [node name="Background" type="TextureRect" parent="." unique_id=416797062]
 layout_mode = 1

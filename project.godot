@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="MonarcaJam2026"
 run/main_scene="res://scenes/menus/main_menu.tscn"
-config/features=PackedStringArray("4.5", "GL Compatibility")
+config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -20,6 +24,9 @@ config/icon="res://icon.svg"
 SceneManager="*res://scripts/managers/scene_manager.gd"
 SettingsManager="*res://scripts/managers/settings_manager.gd"
 UISoundManager="*res://scripts/managers/ui_sound_manager.gd"
+MenuMusicManager="*res://scripts/managers/menu_music_manager.gd"
+ScreamerManager="*res://scripts/managers/screamer_manager.gd"
+EndingState="*res://scripts/managers/ending_state.gd"
 
 [display]
 

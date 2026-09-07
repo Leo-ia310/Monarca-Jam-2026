@@ -1,21 +1,27 @@
 extends Control
 
 const NEXT_SCENE_PATH := "res://scenes/game/salidaciclo2.tscn"
+const HEART_BACKGROUND_1 := preload("res://assets/ui/desayuno_ciclo2_heart_1.png")
+const HEART_BACKGROUND_2 := preload("res://assets/ui/desayuno_ciclo2_heart_2.png")
 
 @export var fade_in_duration: float = 2.5
 @export var fade_out_duration: float = 2.5
 @export var transition_zoom_scale: float = 1.05
+@export var heartbeat_frame_duration: float = 0.7
 
 @onready var background := $Background as TextureRect
 @onready var dialogue_box := $DialogueBox
 @onready var fade_rect := $FadeRect as ColorRect
 @onready var cup_audio := $CupAudio as AudioStreamPlayer
 @onready var sip_audio := $SipAudio as AudioStreamPlayer
+@onready var heartbeat_audio := $HeartbeatAudio as AudioStreamPlayer
 
 var _transition_started := false
+var _heartbeat_frame := 0
 
 
 func _ready() -> void:
+	ScreamerManager.start_profile("cycle2_normal")
 	dialogue_box.line_started.connect(_on_dialogue_line_started)
 	dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	dialogue_box.visible = false
@@ -23,43 +29,75 @@ func _ready() -> void:
 	fade_rect.modulate.a = 1.0
 	_update_transition_pivot()
 	background.scale = Vector2.ONE * transition_zoom_scale
+	_start_heartbeat_background_loop()
+	if heartbeat_audio != null and heartbeat_audio.stream != null:
+		heartbeat_audio.play()
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
+			"text": "No entiendo, ¿qué me sucede?\nEsta mañana ha sido extraña."
+		},
+		{
+			"speaker": "???",
+			"text": "Siento miedo, angustia, terror."
+		},
+		{
+			"speaker": "???",
 			"text": "Solo necesito una taza de..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "De cafe."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "*toma un sorbo*"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Ahg... detesto el cafe."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "No se por que pense que iba a querer esto."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Mejor un te."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Algo mas suave... cualquier cosa menos cafe."
 		}
 	])
 
 
+func _exit_tree() -> void:
+	ScreamerManager.stop()
+	if heartbeat_audio != null:
+		heartbeat_audio.stop()
+
+
+func _start_heartbeat_background_loop() -> void:
+	background.texture = HEART_BACKGROUND_1
+	_heartbeat_frame = 0
+	_heartbeat_background_loop()
+
+
+func _heartbeat_background_loop() -> void:
+	while is_inside_tree():
+		await get_tree().create_timer(heartbeat_frame_duration).timeout
+		if not is_inside_tree():
+			return
+		_heartbeat_frame = 1 - _heartbeat_frame
+		background.texture = HEART_BACKGROUND_1 if _heartbeat_frame == 0 else HEART_BACKGROUND_2
+
+
 func _on_dialogue_line_started() -> void:
-	if dialogue_box.current_line == 1 and cup_audio != null and cup_audio.stream != null:
+	if dialogue_box.current_line == 3 and cup_audio != null and cup_audio.stream != null:
 		cup_audio.play()
-	elif dialogue_box.current_line == 2 and sip_audio != null and sip_audio.stream != null:
+	elif dialogue_box.current_line == 4 and sip_audio != null and sip_audio.stream != null:
 		sip_audio.play()
 
 
@@ -68,6 +106,8 @@ func _on_dialogue_finished() -> void:
 		return
 
 	_transition_started = true
+	if heartbeat_audio != null:
+		heartbeat_audio.stop()
 	_go_to_next_scene()
 
 

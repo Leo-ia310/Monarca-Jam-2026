@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dlxmp833pagtj" path="res://scripts/menus/main_menu.gd" id="1_main_menu"]
 [ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
+[ext_resource type="Texture2D" uid="uid://dsbwa3u4pj0ap" path="res://assets/ui/main_menu_background_1.png" id="3_background"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_button"]
 
@@ -22,19 +23,17 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main_menu")
 
-[node name="Background" type="ColorRect" parent="." unique_id=1127468853]
+[node name="Background" type="TextureRect" parent="." unique_id=1127468853]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -3.0
-offset_top = 5.0
-offset_right = -3.0
-offset_bottom = 5.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.02, 0.025, 0.035, 1)
+texture = ExtResource("3_background")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="MenuStack" type="VBoxContainer" parent="." unique_id=1553015212]
 layout_mode = 1
@@ -43,10 +42,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -97.0
-offset_top = -153.0
-offset_right = 183.0
-offset_bottom = 173.0
+offset_left = 39.0
+offset_top = -167.0
+offset_right = 319.0
+offset_bottom = 159.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
@@ -117,10 +116,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -258.0
-offset_top = -222.0
-offset_right = 242.0
-offset_bottom = -162.0
+offset_left = -111.0
+offset_top = -140.0
+offset_right = 389.0
+offset_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_fonts/font = ExtResource("2_font")
@@ -135,10 +134,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -131.0
-offset_top = -123.0
-offset_right = 109.0
-offset_bottom = -93.0
+offset_left = 6.0
+offset_top = -87.0
+offset_right = 246.0
+offset_bottom = -61.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.42, 0.56, 0.64, 1)

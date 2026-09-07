@@ -3,12 +3,15 @@ extends Control
 const TYPING_AUDIO_START_SECONDS := 7.0
 const BASE_SCORE := 40
 const CORRUPT_BINARY_TEXT := "01100100 01100101 01110011 01110000 01101001 01100101 01110010 01110100 01100001"
+const NEXT_DAY_SCENE_PATH := "res://scenes/game/bedroom_ciclo3.tscn"
 
 @export var fade_in_duration: float = 2.5
 @export var boot_duration: float = 2.0
 @export var intro_characters_per_second: float = 130.0
 @export var question_characters_per_second: float = 24.0
 @export var ai_feedback_characters_per_second: float = 22.0
+@export var day_completed_characters_per_second: float = 24.0
+@export var day_completed_hold_duration: float = 7.0
 @export var mascot_positive_texture: Texture2D
 @export var mascot_neutral_texture: Texture2D
 @export var mascot_low_texture: Texture2D
@@ -22,6 +25,7 @@ const CORRUPT_BINARY_TEXT := "01100100 01100101 01110011 01110000 01101001 01100
 @onready var options_container := $TerminalPanel/OptionsContainer as VBoxContainer
 @onready var continue_label := $TerminalPanel/ContinueLabel as Label
 @onready var fade_rect := $FadeRect as ColorRect
+@onready var completion_text := $CompletionText as RichTextLabel
 @onready var typing_audio := $TypingAudio as AudioStreamPlayer
 @onready var move_audio := $MoveAudio as AudioStreamPlayer
 @onready var confirm_audio := $ConfirmAudio as AudioStreamPlayer
@@ -48,15 +52,19 @@ var _typing_question := false
 var _showing_ai_feedback := false
 var _waiting_for_thought := false
 var _form_finished := false
+var _day_completed := false
+var _changing_to_next_day := false
 var _last_score_delta := 0
 var _pending_corrupt_thought := false
 
 
 func _ready() -> void:
+	ScreamerManager.start_profile("cycle2_form")
 	intro_text.visible_characters = 0
 	question_text.visible = false
 	options_container.visible = false
 	continue_label.visible = false
+	completion_text.visible = false
 	thought_dialogue.dialogue_finished.connect(_on_thought_dialogue_finished)
 	thought_dialogue.visible = false
 	_update_mascot_texture()
@@ -70,6 +78,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	ScreamerManager.stop()
 	_stop_typing_audio()
 
 
@@ -90,6 +99,9 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _day_completed:
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo and _session_started and _has_active_question() and not _typing_question and not _showing_ai_feedback and not _waiting_for_thought:
 		match event.keycode:
 			KEY_UP, KEY_W:
@@ -301,6 +313,7 @@ func _submit_current_answer() -> void:
 
 
 func _apply_score(answer_index: int) -> void:
+	EndingState.record_answer(answer_index)
 	match answer_index:
 		0:
 			_last_score_delta = -4
@@ -318,11 +331,11 @@ func _show_corrupt_thought() -> void:
 	options_container.visible = false
 	thought_dialogue.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Que raro..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Eso no estaba ahi, ¿verdad?"
 		}
 	])
@@ -398,8 +411,9 @@ func _show_end_text() -> void:
 	_form_finished = true
 	question_text.visible = false
 	options_container.visible = false
-	intro_text.visible = true
-	_show_text_page("Jornada 002 registrada.\n\nCOGNIS SYSTEMS permanece observando.")
+	intro_text.visible = false
+	continue_label.visible = false
+	_show_final_day_completed()
 
 
 func _has_active_question() -> bool:
@@ -431,11 +445,33 @@ func _finish_typing() -> void:
 
 	_intro_typing = false
 	_stop_typing_audio()
-	continue_label.visible = true
+	continue_label.visible = not _day_completed
 	if _typing_question:
 		_typing_question = false
 		continue_label.visible = false
 		options_container.visible = true
+	if _day_completed and not _changing_to_next_day:
+		_go_to_next_day()
+
+
+func _show_final_day_completed() -> void:
+	_day_completed = true
+	terminal_panel.visible = false
+	fade_rect.visible = true
+	fade_rect.modulate.a = 1.0
+	completion_text.visible = true
+	_intro_source_text = "DIA 2 COMPLETADO"
+	completion_text.text = _intro_source_text
+	_typing_label = completion_text
+	_current_typing_characters_per_second = day_completed_characters_per_second
+	continue_label.visible = false
+	_start_typing()
+
+
+func _go_to_next_day() -> void:
+	_changing_to_next_day = true
+	await get_tree().create_timer(day_completed_hold_duration).timeout
+	get_tree().change_scene_to_file(NEXT_DAY_SCENE_PATH)
 
 
 func _play_typing_audio(from_character: int, to_character: int) -> void:

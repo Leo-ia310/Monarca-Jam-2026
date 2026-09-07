@@ -35,35 +35,35 @@ func _ready() -> void:
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Oh, hoy me veo genial."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Me pregunto si hoy podré salir antes del trabajo..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Y empezar a decorar este lugar."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "El baño es pequeño y sencillo."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Tiene únicamente lo necesario para el día a día:"
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Un lavabo, un espejo, una ducha..."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Y algunos productos de higiene personal."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Todo está ordenado y en su lugar."
 		}
 	])

@@ -26,51 +26,51 @@ func _ready() -> void:
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "2 de azúcar y un poco de leche..."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Y listo, una taza perfecta de café."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "*toma un trago*"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Café, ¿qué haría sin ti?"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Eres lo más lindo de mis mañanas."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Bueno, este lugar no es tan malo."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Esperaba más por parte de [b]COGNIS SYSTEMS[/b]."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Pero bueno, supongo que los fondos se desvían a otro lado. Quién sabe."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "La ventana ofrece una vista de la ciudad que comienza a despertar."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Las cortinas dejan pasar algunos rayos de sol."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Los sonidos del exterior se filtran suavemente al interior."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Por un momento, todo parece seguir su rutina habitual."
 		}
 	])

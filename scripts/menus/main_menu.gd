@@ -3,6 +3,8 @@ extends Control
 const HEADPHONES_NOTICE_PATH := "res://scenes/menus/headphones_notice.tscn"
 const OPTIONS_MENU_PATH := "res://scenes/menus/options_menu.tscn"
 const CREDITS_MENU_PATH := "res://scenes/menus/credits_menu.tscn"
+const BACKGROUND_FRAME_1 := preload("res://assets/ui/main_menu_background_1.png")
+const BACKGROUND_FRAME_2 := preload("res://assets/ui/main_menu_background_2.png")
 
 const BASE_LABELS := ["JUGAR", "OPCIONES", "CRÉDITOS", "SALIR"]
 const EXIT_LABELS := ["SÍ", "NO"]
@@ -15,7 +17,9 @@ const GLITCH_COLORS := [
 	Color(0.72, 0.22, 1.0, 1.0),
 	Color(0.98, 0.45, 0.9, 1.0)
 ]
+const BACKGROUND_FRAME_DURATION := 0.55
 
+@onready var background := $Background as TextureRect
 @onready var play_button := $MenuStack/PlayButton as Button
 @onready var options_button := $MenuStack/OptionsButton as Button
 @onready var credits_button := $MenuStack/CreditsButton as Button
@@ -34,9 +38,12 @@ var _input_locked := false
 var _confirming_exit := false
 var _rng := RandomNumberGenerator.new()
 var _glitching := false
+var _background_frame := 0
 
 
 func _ready() -> void:
+	MenuMusicManager.play_menu_music()
+
 	_buttons = [play_button, options_button, credits_button, exit_button]
 	_exit_buttons = [yes_button, no_button]
 
@@ -54,8 +61,23 @@ func _ready() -> void:
 	exit_confirm.visible = false
 	exit_confirm.modulate.a = 0.0
 	_select_main(0, true)
+	_start_background_loop()
 	_play_entry_animation()
 	_start_menu_glitch_loop()
+
+
+func _start_background_loop() -> void:
+	background.texture = BACKGROUND_FRAME_1
+	_background_loop()
+
+
+func _background_loop() -> void:
+	while is_inside_tree():
+		await get_tree().create_timer(BACKGROUND_FRAME_DURATION).timeout
+		if not is_inside_tree():
+			return
+		_background_frame = 1 - _background_frame
+		background.texture = BACKGROUND_FRAME_1 if _background_frame == 0 else BACKGROUND_FRAME_2
 
 
 func _input(event: InputEvent) -> void:

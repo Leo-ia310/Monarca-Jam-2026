@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://u85n0ie8pkxq"]
+
+[ext_resource type="Script" uid="uid://bspbil0b2dscn" path="res://scripts/game/final_a_office.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://bhqrm2vg7rlyt" path="res://assets/ui/formulario1_background.png" id="2"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="3"]
+
+[node name="FinalAOffice" type="Control" unique_id=1625263563]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="." unique_id=802660488]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2")
+stretch_mode = 5
+
+[node name="TerminalPanel" type="Panel" parent="." unique_id=407968735]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -276.0
+offset_top = -187.0
+offset_right = 660.0
+offset_bottom = 274.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TerminalText" type="RichTextLabel" parent="TerminalPanel" unique_id=540206217]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 23.0
+offset_right = -29.0
+offset_bottom = -26.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/normal_font = ExtResource("3")
+theme_override_font_sizes/normal_font_size = 23
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+
+[node name="DarkOverlay" type="ColorRect" parent="." unique_id=2009788924]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.30200002
+anchor_top = -0.358
+anchor_right = 1.3000001
+anchor_bottom = 1.34
+offset_left = -0.43997192
+offset_top = -0.23999023
+offset_right = -0.00012207031
+offset_bottom = 0.19995117
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FinalLabel" type="Label" parent="." unique_id=517996986]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = 236.0
+offset_right = 320.0
+offset_bottom = 286.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 30
+text = "FINAL 1/3 REALIZADO"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=130378625]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.3
+anchor_top = -0.34
+anchor_right = 1.3050001
+anchor_bottom = 1.34
+offset_top = -0.19999695
+offset_right = 0.5998535
+offset_bottom = 0.19995117
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)

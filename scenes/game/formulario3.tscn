@@ -1,0 +1,273 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/game/formulario3.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://bhqrm2vg7rlyt" path="res://assets/ui/formulario1_background.png" id="2_background"]
+[ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="3_font"]
+[ext_resource type="Texture2D" uid="uid://2gystoy34syb" path="res://assets/ui/cognis_mascot_positive.png" id="4_mascot_positive"]
+[ext_resource type="AudioStream" uid="uid://dd4sn6x3si7um" path="res://assets/audio/mixkit-keyboard-typing-1386.wav" id="5_typing_audio"]
+[ext_resource type="AudioStream" uid="uid://8285kmva67w" path="res://assets/audio/mixkit-short-bass-hit-2299.wav" id="6_move_audio"]
+[ext_resource type="AudioStream" uid="uid://bkh8n88px5j4p" path="res://assets/audio/mixkit-fast-double-click-on-mouse-275.wav" id="7_confirm_audio"]
+[ext_resource type="Texture2D" uid="uid://m3c2e67r022j" path="res://assets/ui/cognis_mascot_neutral.png" id="8_mascot_neutral"]
+[ext_resource type="Texture2D" uid="uid://dyoha78bxqi45" path="res://assets/ui/cognis_mascot_low.png" id="9_mascot_low"]
+[ext_resource type="Texture2D" uid="uid://dcei1hsgy0whc" path="res://assets/ui/cognis_mascot_alert.png" id="10_mascot_alert"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="11_dialogue_box"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_terminal"]
+bg_color = Color(0.01, 0.008, 0.025, 0.78)
+
+[node name="Formulario3" type="Control" unique_id=729778143]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+mascot_positive_texture = ExtResource("4_mascot_positive")
+mascot_neutral_texture = ExtResource("8_mascot_neutral")
+mascot_low_texture = ExtResource("9_mascot_low")
+mascot_alert_texture = ExtResource("10_mascot_alert")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2076281029]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="BootOverlay" type="Control" parent="."]
+layout_mode = 1
+offset_left = 468.0
+offset_top = 246.0
+offset_right = 1058.0
+offset_bottom = 532.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BootBackground" type="ColorRect" parent="BootOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="BootCenter" type="CenterContainer" parent="BootOverlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BootStack" type="VBoxContainer" parent="BootOverlay/BootCenter"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 18
+alignment = 1
+
+[node name="SystemIcon" type="GridContainer" parent="BootOverlay/BootCenter/BootStack"]
+custom_minimum_size = Vector2(74, 74)
+layout_mode = 2
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 2
+
+[node name="PanelA" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+color = Color(0.56, 0.78, 1, 1)
+
+[node name="PanelB" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+color = Color(0.56, 0.78, 1, 1)
+
+[node name="PanelC" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+color = Color(0.56, 0.78, 1, 1)
+
+[node name="PanelD" type="ColorRect" parent="BootOverlay/BootCenter/BootStack/SystemIcon"]
+custom_minimum_size = Vector2(33, 33)
+layout_mode = 2
+color = Color(0.56, 0.78, 1, 1)
+
+[node name="BootLabel" type="Label" parent="BootOverlay/BootCenter/BootStack"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 18
+text = "Cargando sistema..."
+horizontal_alignment = 1
+
+[node name="Mascot" type="TextureRect" parent="." unique_id=500538880]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.03
+anchor_top = 0.17
+anchor_right = 0.31
+anchor_bottom = 0.73
+offset_left = -37.399998
+offset_top = -156.4
+offset_right = 879.2
+offset_bottom = 221.39996
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("8_mascot_neutral")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TerminalPanel" type="Panel" parent="." unique_id=1801347358]
+layout_mode = 1
+offset_left = 468.0
+offset_top = 246.0
+offset_right = 1058.0
+offset_bottom = 532.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_terminal")
+
+[node name="IntroText" type="RichTextLabel" parent="TerminalPanel" unique_id=366107423]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_fonts/bold_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+text = "COGNIS SYSTEMS"
+scroll_active = false
+
+[node name="ContinueLabel" type="Label" parent="TerminalPanel" unique_id=424372715]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = -34.0
+offset_right = -18.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("3_font")
+theme_override_font_sizes/font_size = 14
+text = "Presiona Enter para continuar"
+horizontal_alignment = 2
+
+[node name="QuestionText" type="RichTextLabel" parent="TerminalPanel" unique_id=844176740]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 18.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_fonts/bold_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 16
+theme_override_font_sizes/bold_font_size = 16
+bbcode_enabled = true
+text = "IA:"
+scroll_active = false
+
+[node name="OptionsContainer" type="VBoxContainer" parent="TerminalPanel" unique_id=1524167139]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 138.0
+offset_right = -18.0
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 10
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=1316759037]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CompletionText" type="RichTextLabel" parent="." unique_id=756467030]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_font")
+theme_override_font_sizes/normal_font_size = 54
+text = "DIA 3 COMPLETADO"
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TypingAudio" type="AudioStreamPlayer" parent="." unique_id=1778263116]
+stream = ExtResource("5_typing_audio")
+bus = &"SFX"
+
+[node name="MoveAudio" type="AudioStreamPlayer" parent="." unique_id=656616303]
+stream = ExtResource("6_move_audio")
+bus = &"SFX"
+
+[node name="ConfirmAudio" type="AudioStreamPlayer" parent="." unique_id=1353028357]
+stream = ExtResource("7_confirm_audio")
+bus = &"SFX"
+
+[node name="ThoughtDialogueBox" parent="." instance=ExtResource("11_dialogue_box")]
+visible = false
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 75.0
+offset_top = 534.0
+offset_right = 940.0
+offset_bottom = 675.0
+grow_horizontal = 1
+grow_vertical = 1
+characters_per_second = 24.0
+use_manual_box_rect = true
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[node name="DialogueContent" parent="ThoughtDialogueBox/ContentMargin" index="0"]
+theme_override_constants/separation = 4
+
+[node name="DialogueText" parent="ThoughtDialogueBox/ContentMargin/DialogueContent" index="1"]
+theme_override_font_sizes/normal_font_size = 18
+
+[node name="ContinueRow" parent="ThoughtDialogueBox/ContentMargin/DialogueContent" index="2"]
+custom_minimum_size = Vector2(1, 18)

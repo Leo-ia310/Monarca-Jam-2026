@@ -10,6 +10,8 @@ const COGNIS_WELCOME_PATH := "res://scenes/story/cognis_welcome.tscn"
 
 
 func _ready() -> void:
+	MenuMusicManager.play_menu_music()
+
 	message_label.modulate.a = 0.0
 	fade_rect.modulate.a = 0.0
 	var intro_tween := create_tween()
@@ -22,4 +24,5 @@ func _ready() -> void:
 	exit_tween.tween_property(message_label, "modulate:a", 0.0, fade_duration)
 	exit_tween.tween_property(fade_rect, "modulate:a", 1.0, fade_duration)
 	await exit_tween.finished
+	MenuMusicManager.stop_menu_music()
 	get_tree().change_scene_to_file(COGNIS_WELCOME_PATH)

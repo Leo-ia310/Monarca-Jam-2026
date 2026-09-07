@@ -1,11 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://w557jbjwj3wa"]
+[gd_scene format=3 uid="uid://w557jbjwj3wa"]
 
 [ext_resource type="Script" uid="uid://rk1snbrpo0q6" path="res://scripts/game/bedroom_scene.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://u3cxxh06eevv" path="res://assets/ui/bedroom_background.png" id="2_background"]
 [ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="3_dialogue_box"]
 [ext_resource type="AudioStream" uid="uid://dbma3ycrtaaui" path="res://assets/audio/mixkit-footsteps-on-heels-on-the-pavement-542.wav" id="4_footsteps"]
-[ext_resource type="AudioStream" path="res://assets/audio/mixkit-creaky-door-open-195.wav" id="5_door"]
-[ext_resource type="AudioStream" path="res://assets/audio/mixkit-warning-alarm-buzzer-991.wav" id="6_alarm"]
+[ext_resource type="AudioStream" uid="uid://cb2317u6r8gq8" path="res://assets/audio/mixkit-creaky-door-open-195.wav" id="5_door"]
+[ext_resource type="AudioStream" uid="uid://c8cjh3w4hists" path="res://assets/audio/mixkit-warning-alarm-buzzer-991.wav" id="6_alarm"]
 
 [node name="BedroomScene" type="Control" unique_id=1489911004]
 layout_mode = 3
@@ -60,10 +60,10 @@ color = Color(0, 0, 0, 1)
 stream = ExtResource("4_footsteps")
 bus = &"SFX"
 
-[node name="DoorAudio" type="AudioStreamPlayer" parent="."]
+[node name="DoorAudio" type="AudioStreamPlayer" parent="." unique_id=1568824912]
 stream = ExtResource("5_door")
 bus = &"SFX"
 
-[node name="AlarmAudio" type="AudioStreamPlayer" parent="."]
+[node name="AlarmAudio" type="AudioStreamPlayer" parent="." unique_id=624700605]
 stream = ExtResource("6_alarm")
 bus = &"SFX"

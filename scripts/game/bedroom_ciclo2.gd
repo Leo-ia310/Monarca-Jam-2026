@@ -19,6 +19,7 @@ var _transition_started := false
 
 
 func _ready() -> void:
+	ScreamerManager.start_profile("cycle2_normal")
 	dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	dialogue_box.visible = false
 	fade_rect.visible = true
@@ -30,17 +31,25 @@ func _ready() -> void:
 	dialogue_box.start_dialogue([
 		{
 			"speaker": "",
-			"text": "mmm, *busca algo al lado de ella*"
+			"text": "Antes de su rostro se encontraba su alienación, no tenía memoria.\nNo tenía memoria, pero recordaba."
 		},
 		{
 			"speaker": "",
-			"text": "No, no esta, oh que?"
+			"text": "No tenía nombre, pero respondía.\nAlgo detrás de sus ojos repetía la forma entre sus gestos."
 		},
 		{
-			"speaker": "",
-			"text": "*bosteza* aun tengo mucho sueño"
+			"speaker": "???",
+			"text": "mmmm, 5 minutos más\n*suspiro* Que pereza levantarse"
+		},
+		{
+			"speaker": "???",
+			"text": "me pregunto porque seguiré pensando en la entrevista de trabajo,\nen fin hay que seguir con el día."
 		}
 	])
+
+
+func _exit_tree() -> void:
+	ScreamerManager.stop()
 
 
 func _on_dialogue_finished() -> void:

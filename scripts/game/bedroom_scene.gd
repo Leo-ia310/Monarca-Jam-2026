@@ -29,31 +29,31 @@ func _ready() -> void:
 	await _play_alarm_intro()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "mmmm, 5 minutos más"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "*suspiro* que pereza levantarse"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Me pregunto por qué seguiré pensando en la entrevista de trabajo."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "En fin. Hay que levantarse."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "La habitación parece pequeña."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Hay poco espacio entre la cama, el escritorio y el resto de los muebles."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "No hay demasiadas cosas alrededor; solo lo necesario para el día a día."
 		}
 	])

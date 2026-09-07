@@ -1,0 +1,188 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scripts/game/final_a_loop.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="2"]
+[ext_resource type="FontFile" path="res://assets/fonts/rat-typewriter.ttf" id="3"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-glitch-static-1457.wav" id="4"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-small-electric-glitch-2595.wav" id="5"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-short-bass-hit-2299.wav" id="6"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-fast-heartbeat-493.wav" id="7"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-warning-alarm-buzzer-991.wav" id="8"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-filling-sink-with-water-1819.wav" id="9"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-quick-sip-from-a-drink-145.wav" id="10"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-creaky-door-open-195.wav" id="11"]
+
+[node name="FinalALoop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch_mode = 5
+
+[node name="Foreground" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -420.0
+offset_top = -275.0
+offset_right = 420.0
+offset_bottom = 275.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="GlitchCopyPink" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="GlitchCopyGreen" type="TextureRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+stretch_mode = 5
+
+[node name="GlitchOverlay" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(1, 0, 1, 1)
+
+[node name="DialogueBox" parent="." instance=ExtResource("2")]
+layout_mode = 1
+base_box_size = Vector2(760, 250)
+bottom_margin = 24.0
+max_width_ratio = 0.72
+max_height_ratio = 0.32
+content_margin_left = 58.0
+content_margin_top = 58.0
+content_margin_right = 54.0
+content_margin_bottom = 42.0
+
+[node name="ChoicePanel" type="Panel" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -310.0
+offset_top = -110.0
+offset_right = 310.0
+offset_bottom = 110.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ChoiceMargin" type="MarginContainer" parent="ChoicePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="ChoiceStack" type="VBoxContainer" parent="ChoicePanel/ChoiceMargin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="QuestionLabel" type="Label" parent="ChoicePanel/ChoiceMargin/ChoiceStack"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 28
+horizontal_alignment = 1
+
+[node name="YesLabel" type="Label" parent="ChoicePanel/ChoiceMargin/ChoiceStack"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 26
+text = "> SI"
+horizontal_alignment = 1
+
+[node name="NoLabel" type="Label" parent="ChoicePanel/ChoiceMargin/ChoiceStack"]
+layout_mode = 2
+mouse_filter = 0
+theme_override_fonts/font = ExtResource("3")
+theme_override_font_sizes/font_size = 26
+text = "  NO"
+horizontal_alignment = 1
+
+[node name="FadeRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="GlitchStaticAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4")
+volume_db = 2.0
+
+[node name="GlitchElectricAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5")
+volume_db = 2.0
+
+[node name="GlitchBassAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6")
+volume_db = 4.0
+
+[node name="GlitchHeartbeatAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7")
+volume_db = 3.0
+
+[node name="AlarmAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8")
+
+[node name="WaterAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9")
+
+[node name="CoffeeAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10")
+
+[node name="DoorAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11")
+
+[connection signal="mouse_entered" from="ChoicePanel/ChoiceMargin/ChoiceStack/YesLabel" to="." method="_on_yes_mouse_entered"]
+[connection signal="gui_input" from="ChoicePanel/ChoiceMargin/ChoiceStack/YesLabel" to="." method="_on_yes_gui_input"]
+[connection signal="mouse_entered" from="ChoicePanel/ChoiceMargin/ChoiceStack/NoLabel" to="." method="_on_no_mouse_entered"]
+[connection signal="gui_input" from="ChoicePanel/ChoiceMargin/ChoiceStack/NoLabel" to="." method="_on_no_gui_input"]

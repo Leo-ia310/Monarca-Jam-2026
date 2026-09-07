@@ -6,6 +6,7 @@ const NEXT_SCENE_PATH := "res://scenes/game/desayunociclo2.tscn"
 @export var fade_out_duration: float = 2.5
 @export var transition_zoom_scale: float = 1.05
 @export var blink_texture: Texture2D
+@export var fragment_blink_texture: Texture2D
 
 @onready var background := $Background as TextureRect
 @onready var character := $Character as TextureRect
@@ -23,12 +24,15 @@ var _background_start_position := Vector2.ZERO
 var _character_start_position := Vector2.ZERO
 var _fragment_start_position := Vector2.ZERO
 var _normal_texture: Texture2D
+var _fragment_normal_texture: Texture2D
 var _blinking_active := true
+var _fragment_blinking_active := false
 
 
 func _ready() -> void:
 	_rng.randomize()
 	_normal_texture = character.texture
+	_fragment_normal_texture = fragment_character.texture
 	dialogue_box.line_started.connect(_on_dialogue_line_started)
 	dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	dialogue_box.visible = false
@@ -50,30 +54,31 @@ func _ready() -> void:
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "",
-			"text": "Deberia de llamar a mama."
+			"speaker": "???",
+			"text": "Una sensación extraña me abruma.\n¿Todo está bien?"
 		},
 		{
-			"speaker": "",
-			"text": "Hace rato que no hablo con ella."
+			"speaker": "???",
+			"text": "No, una inundación perfora mi cabeza.\nEs insoportable."
 		},
 		{
-			"speaker": "",
-			"text": "*se mire al espejo*"
-		},
-		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "..."
 		},
 		{
 			"speaker": "",
-			"text": "yo..."
+			"text": "Entonces los ojos comenzaron,\ntodos mirando al mismo lado."
+		},
+		{
+			"speaker": "",
+			"text": "Su cara, desfigurada,\ndesvela incesante el porvenir."
 		}
 	])
 
 
 func _exit_tree() -> void:
 	_blinking_active = false
+	_fragment_blinking_active = false
 	if sink_audio != null:
 		sink_audio.stop()
 
@@ -85,6 +90,7 @@ func _on_dialogue_line_started() -> void:
 	character.visible = false
 	_blinking_active = false
 	fragment_character.visible = true
+	_start_fragment_blink_loop()
 	if not _fragment_glitch_played:
 		_fragment_glitch_played = true
 		_play_fragment_glitch()
@@ -105,6 +111,24 @@ func _blink_loop() -> void:
 		await get_tree().create_timer(_rng.randf_range(0.13, 0.2)).timeout
 		if is_inside_tree():
 			character.texture = _normal_texture
+
+
+func _start_fragment_blink_loop() -> void:
+	if fragment_blink_texture == null or _fragment_normal_texture == null:
+		return
+	_fragment_blinking_active = true
+	_fragment_blink_loop()
+
+
+func _fragment_blink_loop() -> void:
+	while is_inside_tree() and _fragment_blinking_active:
+		await get_tree().create_timer(_rng.randf_range(1.15, 2.1)).timeout
+		if not is_inside_tree() or not _fragment_blinking_active:
+			break
+		fragment_character.texture = fragment_blink_texture
+		await get_tree().create_timer(_rng.randf_range(0.18, 0.28)).timeout
+		if is_inside_tree():
+			fragment_character.texture = _fragment_normal_texture
 
 
 func _play_fragment_glitch() -> void:
@@ -140,6 +164,7 @@ func _on_dialogue_finished() -> void:
 		return
 
 	_transition_started = true
+	_fragment_blinking_active = false
 	_go_to_next_scene()
 
 

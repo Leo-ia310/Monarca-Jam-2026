@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://dswnsgba4w2oc"]
+
+[ext_resource type="Script" path="res://scripts/game/bedroom_ciclo3.gd" id="1_script"]
+[ext_resource type="Texture2D" path="res://assets/ui/bedroom_ciclo3_background.png" id="2_background"]
+[ext_resource type="PackedScene" path="res://scenes/ui/dialogue_box.tscn" id="3_dialogue_box"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-footsteps-on-mattress-loop-534.wav" id="4_footsteps"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-creaky-door-open-195.wav" id="5_door"]
+[ext_resource type="AudioStream" path="res://assets/audio/mixkit-warning-alarm-buzzer-991.wav" id="6_alarm"]
+
+[node name="BedroomCiclo3" type="Control" unique_id=1489911004]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2038363770]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_background")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="DialogueBox" parent="." unique_id=1693581789 instance=ExtResource("3_dialogue_box")]
+visible = true
+layout_mode = 1
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 75.0
+offset_top = 534.0
+offset_right = 940.0
+offset_bottom = 675.0
+grow_horizontal = 1
+grow_vertical = 1
+use_manual_box_rect = true
+content_margin_left = 42.0
+content_margin_top = 38.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
+
+[node name="FadeRect" type="ColorRect" parent="." unique_id=1110724855]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="FootstepsAudio" type="AudioStreamPlayer" parent="." unique_id=1620312299]
+stream = ExtResource("4_footsteps")
+bus = &"SFX"
+
+[node name="DoorAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_door")
+bus = &"SFX"
+
+[node name="AlarmAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_alarm")
+bus = &"SFX"

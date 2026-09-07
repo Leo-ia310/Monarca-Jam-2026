@@ -199,6 +199,7 @@ func _show_intro_page(page_index: int) -> void:
 
 
 func _start_training_session() -> void:
+	EndingState.reset()
 	_session_started = true
 	daily_score = BASE_SCORE
 	_last_score_delta = 0
@@ -404,6 +405,7 @@ func _submit_current_answer() -> void:
 	var question_id := str(question.get("id", ""))
 	var answer_index := _selected_option_index
 	_play_audio(confirm_audio)
+	EndingState.record_answer(answer_index)
 	saved_responses.append({
 		"question_id": question_id,
 		"answer": answer
@@ -547,7 +549,7 @@ func _show_intro_player_dialogue() -> void:
 	continue_label.visible = false
 	player_dialogue.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Ok comencemos con esto."
 		}
 	])
@@ -560,15 +562,15 @@ func _show_completion_player_dialogue() -> void:
 	continue_label.visible = false
 	player_dialogue.start_dialogue([
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Estos cuestionarios realmente son extraños."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Me pregunto bajo qué criterios son puestos."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Pero bueno, un día más contribuyendo al avance tecnológico."
 		}
 	])
@@ -599,7 +601,7 @@ func _show_final_day_completed() -> void:
 	fade_rect.visible = true
 	fade_rect.modulate.a = 1.0
 	completion_text.visible = true
-	_intro_source_text = "DIA COMPLETADO"
+	_intro_source_text = "DIA 1 COMPLETADO"
 	completion_text.text = _intro_source_text
 	_typing_label = completion_text
 	_current_typing_characters_per_second = day_completed_characters_per_second

@@ -25,43 +25,43 @@ func _ready() -> void:
 	await _play_intro_transition()
 	dialogue_box.start_dialogue([
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "La puerta permanece cerrada, separando el pequeño apartamento del pasillo exterior."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Bajo ella se filtra una franja de luz proveniente del edificio."
 		},
 		{
-			"speaker": "Narrador",
+			"speaker": "",
 			"text": "Del otro lado apenas se escuchan pasos y el movimiento de los vecinos comenzando el día."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "¿No olvido nada verdad?"
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Creo que no, pero qué emoción haber clasificado."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Espero que todo salga bien."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "O sea, no es como que no deba salir bien."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Al fin estoy en el puesto en que siempre he querido."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "Bueno, [b]æßðſ€ðſſ[/b] recuerda: hoy es un nuevo día."
 		},
 		{
-			"speaker": "",
+			"speaker": "???",
 			"text": "*sale*"
 		}
 	])
