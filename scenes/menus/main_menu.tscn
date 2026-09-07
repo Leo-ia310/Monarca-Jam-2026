@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://b2crguyo0kvbk"]
+[gd_scene load_steps=6 format=3 uid="uid://b2crguyo0kvbk"]
 
 [ext_resource type="Script" uid="uid://dlxmp833pagtj" path="res://scripts/menus/main_menu.gd" id="1_main_menu"]
 [ext_resource type="FontFile" uid="uid://ceuqd004krl1l" path="res://assets/fonts/rat-typewriter.ttf" id="2_font"]
@@ -14,7 +14,7 @@ border_width_right = 1
 border_width_bottom = 1
 border_color = Color(0.42, 0.56, 0.64, 0.85)
 
-[node name="MainMenu" type="Control" unique_id=593051780]
+[node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +23,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_main_menu")
 
-[node name="Background" type="TextureRect" parent="." unique_id=1127468853]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -35,7 +35,7 @@ texture = ExtResource("3_background")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="MenuStack" type="VBoxContainer" parent="." unique_id=1553015212]
+[node name="MenuStack" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -52,12 +52,12 @@ mouse_filter = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="ButtonSpacer" type="Control" parent="MenuStack" unique_id=1403870757]
+[node name="ButtonSpacer" type="Control" parent="MenuStack"]
 custom_minimum_size = Vector2(1, 86)
 layout_mode = 2
 mouse_filter = 2
 
-[node name="PlayButton" type="Button" parent="MenuStack" unique_id=543124689]
+[node name="PlayButton" type="Button" parent="MenuStack"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
@@ -70,7 +70,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
 text = "> JUGAR"
 
-[node name="OptionsButton" type="Button" parent="MenuStack" unique_id=1177508329]
+[node name="OptionsButton" type="Button" parent="MenuStack"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
@@ -83,7 +83,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
 text = "  OPCIONES"
 
-[node name="CreditsButton" type="Button" parent="MenuStack" unique_id=1308040421]
+[node name="CreditsButton" type="Button" parent="MenuStack"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
@@ -96,7 +96,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
 text = "  CRÉDITOS"
 
-[node name="ExitButton" type="Button" parent="MenuStack" unique_id=1202157046]
+[node name="ExitButton" type="Button" parent="MenuStack"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
@@ -109,7 +109,7 @@ theme_override_styles/disabled = SubResource("StyleBoxEmpty_button")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
 text = "  SALIR"
 
-[node name="TitleLabel" type="Label" parent="." unique_id=120139057]
+[node name="TitleLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -127,7 +127,7 @@ theme_override_font_sizes/font_size = 44
 text = "Singularidad"
 horizontal_alignment = 1
 
-[node name="SubtitleLabel" type="Label" parent="." unique_id=94346919]
+[node name="SubtitleLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -146,7 +146,7 @@ theme_override_font_sizes/font_size = 16
 text = "COGNIS SYSTEMS"
 horizontal_alignment = 1
 
-[node name="ExitConfirm" type="Panel" parent="." unique_id=707698113]
+[node name="ExitConfirm" type="Panel" parent="."]
 visible = false
 layout_mode = 1
 anchors_preset = 8
@@ -162,7 +162,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_confirm")
 
-[node name="ConfirmStack" type="VBoxContainer" parent="ExitConfirm" unique_id=941075354]
+[node name="ConfirmStack" type="VBoxContainer" parent="ExitConfirm"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -175,7 +175,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 8
 
-[node name="ConfirmLabel" type="Label" parent="ExitConfirm/ConfirmStack" unique_id=1916174370]
+[node name="ConfirmLabel" type="Label" parent="ExitConfirm/ConfirmStack"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.9, 1, 1)
 theme_override_fonts/font = ExtResource("2_font")
@@ -183,7 +183,7 @@ theme_override_font_sizes/font_size = 18
 text = "¿FINALIZAR SESIÓN?"
 horizontal_alignment = 1
 
-[node name="YesButton" type="Button" parent="ExitConfirm/ConfirmStack" unique_id=1655143120]
+[node name="YesButton" type="Button" parent="ExitConfirm/ConfirmStack"]
 custom_minimum_size = Vector2(180, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
@@ -194,7 +194,7 @@ theme_override_styles/hover = SubResource("StyleBoxEmpty_button")
 theme_override_styles/focus = SubResource("StyleBoxEmpty_button")
 text = "  SÍ"
 
-[node name="NoButton" type="Button" parent="ExitConfirm/ConfirmStack" unique_id=674978373]
+[node name="NoButton" type="Button" parent="ExitConfirm/ConfirmStack"]
 custom_minimum_size = Vector2(180, 36)
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")

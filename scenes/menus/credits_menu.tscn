@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3]
+[gd_scene load_steps=2 format=3 uid="uid://du45h5h15cw3x"]
 
-[ext_resource type="Script" path="res://scripts/menus/credits_menu.gd" id="1_credits_menu"]
+[ext_resource type="Script" uid="uid://cxse7sd0dansy" path="res://scripts/menus/credits_menu.gd" id="1_credits_menu"]
 
 [node name="CreditsMenu" type="Control"]
 layout_mode = 3
@@ -51,7 +51,19 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(640, 360)
 layout_mode = 2
 bbcode_enabled = true
-text = "[center][b]MONARCA JAM 2026[/b]\n\nJuego 2D de terror tecnológico / psicológico\nCreado para una game jam de 3 días\n\n[b]Equipo[/b]\nDirección creativa: pendiente\nProgramación: pendiente\nArte 2D: pendiente\nDiseño de UI: pendiente\nNarrativa: pendiente\nAudio y música: pendiente\nQA / Playtesting: pendiente\n\n[b]Assets temporales[/b]\nFondos, personajes, iconos y sonidos serán reemplazados por el equipo.\n\n[b]Agradecimientos[/b]\nGracias al equipo, testers y colaboradores de la jam.[/center]"
+text = "[center][b]MONARCA JAM 2026[/b]
+
+Juego 2D de terror tecnológico / psicológico
+Creado para una game jam de 3 días
+
+[b]Equipo[/b]
+\"Maikel Leandro Martinez Flores\", \"Guion / Arte / programacion\"],
+\"Kiara Saray Gonzalez Leyton\", \"Programacion\"],
+\"Maria Puala Vargas Quesada\", \"Programacion/ Arte\"],
+\"Alexander Lopez Viales\", \"Música / Sonido / Guion\"],
+QA / Playtesting: pendiente
+
+"
 fit_content = true
 scroll_active = false
 
@@ -59,5 +71,4 @@ scroll_active = false
 unique_name_in_owner = true
 custom_minimum_size = Vector2(280, 48)
 layout_mode = 2
-focus_mode = 2
 text = "Volver"
